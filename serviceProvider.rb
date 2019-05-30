@@ -1,5 +1,5 @@
 class ServiceProvider
-  attr_reader :name, :phoneNum, :services, :availability, :appointments
+  attr_reader :name, :phoneNum, :services, :availability, :appointments, :serviceAdd
   def initialize(name, phoneNum, services, availability, appointments) (
     @name = name
     @phoneNum = phoneNum
@@ -16,6 +16,11 @@ class ServiceProvider
       end
     end
     return false
+  )
+  end
+
+  def serviceAdd(service) (
+    @services.push(service)
   )
   end
   # name

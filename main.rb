@@ -27,10 +27,10 @@ def serviceAdd
   puts service_name
   provider_name = $prompt.ask('Add to which provider? (Name):')
   sp = $all_sp.select do |sp| 
-    puts "SP NAME: " + sp["name"]
-    sp["name"] == provider_name
+    # puts "SP NAME: " + sp["name"]
+    sp.name == provider_name
   end
-  sp.services.push(Service.new(service_name, service_price, service_length))
+  sp.serviceAdd(Service.new(service_name, service_price, service_length))
 end
 
 def serviceRemove
@@ -51,10 +51,10 @@ commands = {
   'service:remove' => Proc.new{serviceRemove},
   'sp:add' => Proc.new{spAdd},
   'sp:remove' => Proc.new{spRemove},
+  'sp:show' => Proc.new{printSP($all_sp)},
   'appointment:add' => Proc.new{appointmentAdd},
   'availability:add' => Proc.new{availabilityAdd},
   'schedule:view' => Proc.new{scheduleView},
-  'sp:show' => Proc.new{printSP($all_sp)}
 }
 
 # INITIALIZE
