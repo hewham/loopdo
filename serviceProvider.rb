@@ -1,3 +1,9 @@
+  # name
+  # phoneNum
+  # services = []
+  # availability = hash{day:[TimeBlocks]}
+  # appointments = []
+
 class ServiceProvider
   attr_reader :name, :phoneNum, :services, :availability, :appointments, :serviceAdd
   def initialize(name, phoneNum, services, availability, appointments) (
@@ -7,6 +13,13 @@ class ServiceProvider
     @availability = availability
     @appointments = appointments
   )
+  end
+
+  def printServices()
+    puts "#{@name}'s Services:"
+    @services.each do |s|
+      s.printDetails
+    end
   end
 
   def containsService(name) (
@@ -23,9 +36,4 @@ class ServiceProvider
     @services.push(service)
   )
   end
-  # name
-  # phoneNum
-  # services = []
-  # availability = hash{day:[TimeBlocks]}
-  # appointments = []
 end
