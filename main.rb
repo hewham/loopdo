@@ -3,6 +3,7 @@ require_relative './service'
 require_relative './serviceProvider'
 require_relative './appointment'
 require_relative './timeblock'
+require_relative './print'
 require 'tty-prompt'
 $prompt = TTY::Prompt.new
 
@@ -18,20 +19,6 @@ def find_sp_by_service(serviceName)
   end
   return sp_with_service
 end
-
-def printSP
-  puts ''
-  puts 'SERVICE PROVIDERS:'
-  puts '------------------'
-  $all_sp.each do |sp|
-    puts sp.name
-  end
-  puts '------------------'
-  puts ''
-end
-
-$all_sp = []
-$all_sp.push(ServiceProvider.new('Jim', '1111111111', [Service.new('DEMON HUNTING', 200, 60)], {}, []))
 
 def serviceAdd
   service_name = $prompt.ask('Service Name:')
@@ -67,9 +54,12 @@ commands = {
   'appointment:add' => Proc.new{appointmentAdd},
   'availability:add' => Proc.new{availabilityAdd},
   'schedule:view' => Proc.new{scheduleView},
-  'sp:show' => Proc.new{printSP}
+  'sp:show' => Proc.new{printSP($all_sp)}
 }
 
+# INITIALIZE
+$all_sp = []
+$all_sp.push(ServiceProvider.new('Jim', '1111111111', [Service.new('DEMON HUNTING', 200, 60)], {}, []))
 
 loop do
   next_prompt = $prompt.ask('Please enter a command:')
