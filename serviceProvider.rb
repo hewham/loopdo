@@ -31,6 +31,13 @@ class ServiceProvider
     end
   end
 
+  def scheduleView()
+    puts "#{Magenta}#{@name}'s#{Reset} Appointments:"
+    @appointments.each do |a|
+      a.printDetails
+    end
+  end
+
   def containsService(name) (
     for service in @services do
       if service.name == name

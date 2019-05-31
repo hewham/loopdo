@@ -1,14 +1,15 @@
 class Appointment
-  attr_reader :timeblock, :serviceProvider, :client, :serviceProvider
-  def initialize(timeblock, services, client, serviceProvider) (
+  attr_reader :timeblock, :serviceProvider, :client_name, :serviceProvider
+  def initialize(timeblock, service, client_name, serviceProvider) (
     @timeblock = timeblock
-    @services = services
-    @client = client
+    @service = service
+    @client_name = client_name
     @serviceProvider = serviceProvider
   )
   end
-  # timeblock TimeBlock
-  # services = []
-  # client
-  # serviceProvider
+
+  def printDetails
+    puts "#{Cyan}#{@client_name}#{Reset}, #{Green}#{@serviceProvider}#{Reset}, #{Yellow}#{@service}#{Reset}"
+  end
+
 end

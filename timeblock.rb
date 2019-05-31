@@ -1,8 +1,9 @@
 class TimeBlock
-  attr_reader :dayOfWeek, :date, :startTime, :stopTime, :isWeekly
-  def initialize(dayOfWeek, date, startTime, stopTime, isWeekly) (
-    @dayOfWeek = dayOfWeek
-    @date = date #Date object
+  attr_reader :month, :day, :year, :startTime, :stopTime, :isWeekly
+  def initialize(month, day, year, startTime, stopTime, isWeekly) (
+    @month = month
+    @day = day
+    @year = year
     @startTime = startTime #integer between 0 and 47
     @stopTime = stopTime #integer between 0 and 47
     @isWeekly = isWeekly
