@@ -5,6 +5,7 @@ require_relative './appointment'
 require_relative './timeblock'
 require_relative './print'
 require_relative './init'
+require_relative './colors'
 require 'tty-prompt'
 $prompt = TTY::Prompt.new
 
@@ -26,18 +27,11 @@ def find_sp_by_service(serviceName)
   return sp_with_service
 end
 
-def list_commands
-  puts 'CURRENT COMMAND LIST:'
-  puts 'Add service: s:add'
-  puts 'Remove service: s:remove'
-  puts 'Display all services: s:show'
-  puts 'Add service provider: sp:add'
-  puts 'Remove service provider: sp:remove'
-  puts 'Display all service providers: sp:show'
-  puts 'Add new appointment: appointment:add'
-  puts 'Add new availability block: availability:add'
-  puts 'View schedule: schedule:view'
-  puts "--------------------------------"
+def serviceErrorMessage
+  puts ''
+  puts 'Service Provider Not Found...'
+  puts 'Choose from the following:'
+  spPrint($all_sp)
 end
 
 def serviceAdd
@@ -54,42 +48,72 @@ def serviceAdd
       successPrint()
       break
     else
-      puts ''
-      puts 'Service Provider Not Found...'
-      puts 'Choose from the following:'
-      spPrint($all_sp)
+      serviceErrorMessage()
     end
   end
 end
 
 def serviceRemove
+  puts "Choose Service to Remove"
+  servicePrint($all_sp)
   service_name = $prompt.ask('Service Name:')
   provider_name = $prompt.ask('Service Provider:')
+  spToRemove = nil
+  isFound = false
   sp = $all_sp.select do |sp|
     if sp.name == provider_name
-      puts '+++++++++++++++++++++++++++++++++++++++++++'
-      puts sp
-      sp.serviceRemove(service_name)
-      successPrint
-      break
-    else
-      puts ''
-      puts 'Service Provider Not Found...'
-      puts 'Choose from the following:'
-      spPrint($all_sp)
+      spToRemove = sp
+      isFound = true
+      break      
     end
+  end
+  if isFound
+    spToRemove.serviceRemove(service_name)
+    successPrint()
+  else
+    serviceErrorMessage()
   end
 end
 
 def spAdd
+  provider_name = $prompt.ask('Provider Name:')
+  provider_phone = $prompt.ask('Provider Phone Number:')
+  $all_sp.push(ServiceProvider.new(provider_name, provider_phone, [], {}, []))
+  successPrint()
 end
+
 def spRemove
+  provider_name = $prompt.ask('Provider Name To Remove:')
+  $all_sp.each do |sp|
+    if sp.name == provider_name
+      confirm = $prompt.ask("Deleting #{provider_name}. Are you sure? (y/n)")
+      if confirm == 'y'
+        $all_sp.delete(sp)
+        successPrint()
+      end
+    end
+  end
 end
+
 def appointmentAdd
 end
 def availabilityAdd
 end
 def scheduleView
+end
+
+def list_commands
+  puts 'CURRENT COMMAND LIST:'
+  puts 'Add service: s:add'
+  puts 'Remove service: s:remove'
+  puts 'Display all services: s:show'
+  puts 'Add service provider: sp:add'
+  puts 'Remove service provider: sp:remove'
+  puts 'Display all service providers: sp:show'
+  puts 'Add new appointment: appointment:add'
+  puts 'Add new availability block: availability:add'
+  puts 'View schedule: schedule:view'
+  puts "--------------------------------"
 end
 
 commands = {
@@ -112,8 +136,6 @@ loop do
   isCommand = false
   commands.each do |command, function|
     if next_prompt == command
-      # command[:function]
-      puts "COMMAND: #{command}"
       function.call()
       isCommand = true
     end

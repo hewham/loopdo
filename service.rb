@@ -8,6 +8,6 @@ class Service
   end
 
   def printDetails
-    puts "SERVICE: #{@name}, PRICE: $#{@price}, TIME LENGTH: #{@length} Minutes"
+    puts "#{Cyan}#{@name}#{Reset}, #{Green}$#{@price}#{Reset}, #{Yellow}#{@length} Minutes#{Reset}"
   end
 end

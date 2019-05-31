@@ -16,24 +16,16 @@ class ServiceProvider
   end
 
   def serviceRemove(service_name) (
-    puts 'here'
-    # @services.select do |service|
-    #   if service.name == service_name
-    #     @services.delete(service_name)
-    #   end
-    # end
-
     for service in @services do
       if service.name == service_name
         @services.delete(service)
       end
     end
-    #@services.delete(service_name)
     )
   end
 
   def printServices()
-    puts "#{@name}'s Services:"
+    puts "#{Magenta}#{@name}'s#{Reset} Services:"
     @services.each do |s|
       s.printDetails
     end
