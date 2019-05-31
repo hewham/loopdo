@@ -55,7 +55,7 @@ class ServiceProvider
   
   def is_available(service, timeblock, isWeekly)
     #add check to make sure timeblock is in the future
-    is_future_date = (timeblock.date >= Date.today)
+    is_future_date = (timeblock.startTime >= DateTime.now)
 
     #check if provider offers service
     service_offered = containsService(service.name)
@@ -82,11 +82,10 @@ class ServiceProvider
         end
       end
       #check for overlap if dates are the same
-      if (appointment.timeblock.date == timeblock.date)
-        if appointment.timeblock.overlaps(timeblock)
-          no_overlap_with_appointments = false
-          break
-        end
+
+      if appointment.timeblock.overlaps(timeblock)
+        no_overlap_with_appointments = false
+        break
       end
 
       return is_future_date && service_offered && 

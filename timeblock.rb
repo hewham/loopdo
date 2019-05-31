@@ -11,11 +11,10 @@ class TimeBlock
   end
 
   def contains(timeblock2)
-  	#return true if the timeblock contains timeblock2
-  	same_date = (@date == timeblock2.date)
-  	starts_after = (timeblock2.startTime >= @startTime)
-  	ends_before = (timeblock2.endTime <= @endTime)
-  	return same_date && starts_after && ends_before
+    #return true if the timeblock contains timeblock2
+    starts_after = (timeblock2.startTime >= @startTime)
+    ends_before = (timeblock2.endTime <= @endTime)
+    return starts_after && ends_before
   end
 
   def overlaps(timeblock2)
@@ -27,14 +26,4 @@ class TimeBlock
   	return contains(timeblock2) || overlaps_start || overlaps_end
   end
 
-  def self.time_to_int(time)
-  	#takes a time in the format of "2:00" or "17:30" and returns 
-  	# the corresponding integer between 0 and 47
-  	split_time = time.split(':')
-  	result = split_time[0] * 2
-  	if split_time[1] == '30'
-  		result = result + 1
-  	end
-  	return result
-  end
 end

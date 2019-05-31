@@ -13,7 +13,10 @@ class Service
 
   def service_to_timeblock(startTime, isWeekly, date)
     dayOfWeek = date.strftime("%A")
-    stopTime = startTime + length/30
-    timeblock = Timeblock.new(dayOfWeek, date, startTime, stopTime, isWeekly)
+    stopTime = startTime + ((length.to_f)/24)/60
+    month = startTime.strftime("%m")
+    day = startTime.strftime("%d")
+    year = startTime.strftime("%Y")
+    timeblock = Timeblock.new(month, day, year, startTime, stopTime, isWeekly)
   end
 end
