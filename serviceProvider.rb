@@ -34,7 +34,7 @@ class ServiceProvider
   def containsService(name) (
     for service in @services do
       if service.name == name
-        return true
+        return service
       end
     end
     return false
@@ -44,6 +44,48 @@ class ServiceProvider
   def serviceAdd(service) (
     @services.push(service)
   )
+  end
+  def is_available(service, timeblock)
+    #add check to make sure timeblock is in the future
+    #check if provider offers service
+    service_offered = containsService(service.name)
+
+    #check provider's availability
+    availability_blocks = @availability[timeblock.date]
+    provider_available = false
+    for block in availability_blocks do
+      if block.contains(timeblock)
+        provider_available = true
+      end
+    end
+
+    #check for overlap with provider's appointments
+    no_overlap_with_appointments = true
+    appointments.each do |appointment|
+      #check for overlap if appointment is weekly
+      if appointment.timeblock.isWeekly
+        if appointment.timeblock.dayOfWeek == timeblock.dayOfWeek
+          if appointment.timeblock.overlaps(timeblock)
+            no_overlap_with_appointments = false
+            break
+          end
+        end
+      end
+      #check for overlap if dates are the same
+      if appointment.timeblock.date == timeblock.date
+        if appointment.timeblock.overlaps(timeblock)
+          no_overlap_with_appointments = false
+          break
+        end
+      end
+
+      return service_offered && provider_available && no_overlap_with_appointments
+    end
+
+  end
+
+  def add_appointment(service, timeblock)
+    #add appointment to provider's schedule
   end
 
 
