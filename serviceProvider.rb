@@ -10,7 +10,7 @@ class ServiceProvider
     @name = name
     @phoneNum = phoneNum
     @services = services
-    @availability = availability
+    @availability = availability #day of week => array of timeblocks
     @appointments = appointments
   )
   end
@@ -52,13 +52,16 @@ class ServiceProvider
     @services.push(service)
   )
   end
-  def is_available(service, timeblock)
+  
+  def is_available(service, timeblock, isWeekly)
     #add check to make sure timeblock is in the future
+    is_future_date = (timeblock.date >= Date.today)
+
     #check if provider offers service
     service_offered = containsService(service.name)
 
     #check provider's availability
-    availability_blocks = @availability[timeblock.date]
+    availability_blocks = @availability[timeblock.dayOfWeek]
     provider_available = false
     for block in availability_blocks do
       if block.contains(timeblock)
@@ -69,8 +72,8 @@ class ServiceProvider
     #check for overlap with provider's appointments
     no_overlap_with_appointments = true
     appointments.each do |appointment|
-      #check for overlap if appointment is weekly
-      if appointment.timeblock.isWeekly
+      #check for overlap if either appointment is weekly
+      if appointment.timeblock.isWeekly || isWeekly
         if appointment.timeblock.dayOfWeek == timeblock.dayOfWeek
           if appointment.timeblock.overlaps(timeblock)
             no_overlap_with_appointments = false
@@ -79,20 +82,23 @@ class ServiceProvider
         end
       end
       #check for overlap if dates are the same
-      if appointment.timeblock.date == timeblock.date
+      if (appointment.timeblock.date == timeblock.date)
         if appointment.timeblock.overlaps(timeblock)
           no_overlap_with_appointments = false
           break
         end
       end
 
-      return service_offered && provider_available && no_overlap_with_appointments
+      return is_future_date && service_offered && 
+      provider_available && no_overlap_with_appointments
     end
 
   end
 
-  def add_appointment(service, timeblock)
+  def add_appointment(service, timeblock, client)
     #add appointment to provider's schedule
+    appointment = Appointment.new(timeblock, service, client, self)
+    @appointments << appointment
   end
 
 
