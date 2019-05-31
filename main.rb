@@ -26,6 +26,20 @@ def find_sp_by_service(serviceName)
   return sp_with_service
 end
 
+def list_commands
+  puts 'CURRENT COMMAND LIST:'
+  puts 'Add service: s:add'
+  puts 'Remove service: s:remove'
+  puts 'Display all services: s:show'
+  puts 'Add service provider: sp:add'
+  puts 'Remove service provider: sp:remove'
+  puts 'Display all service providers: sp:show'
+  puts 'Add new appointment: appointment:add'
+  puts 'Add new availability block: availability:add'
+  puts 'View schedule: schedule:view'
+  puts "--------------------------------"
+end
+
 def serviceAdd
   service_name = $prompt.ask('Service Name:')
   service_price = $prompt.ask('Service Price:')
@@ -49,7 +63,24 @@ def serviceAdd
 end
 
 def serviceRemove
+  service_name = $prompt.ask('Service Name:')
+  provider_name = $prompt.ask('Service Provider:')
+  sp = $all_sp.select do |sp|
+    if sp.name == provider_name
+      puts '+++++++++++++++++++++++++++++++++++++++++++'
+      puts sp
+      sp.serviceRemove(service_name)
+      successPrint
+      break
+    else
+      puts ''
+      puts 'Service Provider Not Found...'
+      puts 'Choose from the following:'
+      spPrint($all_sp)
+    end
+  end
 end
+
 def spAdd
 end
 def spRemove
@@ -89,6 +120,8 @@ loop do
   end
   if !isCommand
     puts "Unknown command #{next_prompt}"
+    puts "--------------------------------"
+    list_commands
     next
   end
 end

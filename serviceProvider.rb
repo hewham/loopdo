@@ -15,6 +15,23 @@ class ServiceProvider
   )
   end
 
+  def serviceRemove(service_name) (
+    puts 'here'
+    # @services.select do |service|
+    #   if service.name == service_name
+    #     @services.delete(service_name)
+    #   end
+    # end
+
+    for service in @services do
+      if service.name == service_name
+        @services.delete(service)
+      end
+    end
+    #@services.delete(service_name)
+    )
+  end
+
   def printServices()
     puts "#{@name}'s Services:"
     @services.each do |s|
@@ -23,7 +40,7 @@ class ServiceProvider
   end
 
   def containsService(name) (
-    for service in @services do 
+    for service in @services do
       if service.name == name
         return true
       end
@@ -36,4 +53,6 @@ class ServiceProvider
     @services.push(service)
   )
   end
+
+
 end
