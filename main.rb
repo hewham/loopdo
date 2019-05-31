@@ -142,6 +142,8 @@ end
 def availabilityAdd
 end
 def scheduleView
+  puts "Choose a Service Provider to see their schedule:"
+  spPrint($all_sp)
   provider_name = $prompt.ask('Provider Name:')
   spToUse = nil
   isFound = false
@@ -154,7 +156,6 @@ def scheduleView
   end
   if isFound
     spToUse.scheduleView()
-    successPrint()
   else
     serviceErrorMessage()
   end
@@ -162,16 +163,17 @@ def scheduleView
 end
 
 def list_commands
-  puts 'CURRENT COMMAND LIST:'
-  puts 'Add service: s:add'
-  puts 'Remove service: s:remove'
-  puts 'Display all services: s:list'
-  puts 'Add service provider: sp:add'
-  puts 'Remove service provider: sp:remove'
-  puts 'Display all service providers: sp:list'
-  puts 'Add new appointment: appt:add'
-  puts 'Add new availability block: avail:add'
-  puts 'View schedule: schedule:view'
+  puts "#{BgCyan}COMMAND LIST:#{Reset}"
+  puts "--------------------------------"
+  puts "#{Cyan}s:add#{Reset} | Add service"
+  puts "#{Cyan}s:remove#{Reset} | Remove service"
+  puts "#{Cyan}s:list#{Reset} | Display all services"
+  puts "#{Cyan}sp:add#{Reset} | Add service provider"
+  puts "#{Cyan}sp:remove#{Reset} | Remove service provider"
+  puts "#{Cyan}sp:list#{Reset} | Display all service providers"
+  puts "#{Cyan}appt:add#{Reset} | Add new appointment"
+  puts "#{Cyan}avail:add#{Reset} | Add new availability block"
+  puts "#{Cyan}schedule:view#{Reset} | View schedule"
   puts "--------------------------------"
 end
 
@@ -192,6 +194,7 @@ $all_sp = initData
 
 loop do
   next_prompt = $prompt.ask('Please enter a command:')
+  puts ''
   isCommand = false
   commands.each do |command, function|
     if next_prompt == command
@@ -200,8 +203,7 @@ loop do
     end
   end
   if !isCommand
-    puts "Unknown command #{next_prompt}"
-    puts "--------------------------------"
+    puts "Unknown command #{Red}#{next_prompt}#{Reset}"
     list_commands
     next
   end

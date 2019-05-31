@@ -1,5 +1,4 @@
 def spPrint(all_sp)
-  puts ''
   puts "#{BgMagenta}SERVICE PROVIDERS:#{Reset}"
   puts '------------------'
   all_sp.each do |sp|
@@ -10,7 +9,6 @@ def spPrint(all_sp)
 end
 
 def servicePrint(all_sp)
-  puts ''
   puts "#{BgCyan}SERVICES:#{Reset}"
   puts '------------------'
   for sp in all_sp do
