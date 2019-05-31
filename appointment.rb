@@ -8,8 +8,12 @@ class Appointment
   )
   end
 
-  def printDetails
-    puts "#{Cyan}#{@client_name}#{Reset}, #{Green}#{@serviceProvider}#{Reset}, #{Yellow}#{@service}#{Reset}"
+  def printDetails()
+    puts "#{Cyan} Client Name: #{@client_name}#{Reset}, #{Green} Provider Name:  #{@serviceProvider.name}#{Reset}, #{Yellow} Service Name:  #{@service.name}#{Reset}"
+    puts "Date: #{@timeblock.month} / #{@timeblock.day} / #{@timeblock.year}"
+    puts "Start Time: #{@timeblock.startTime}"
+    puts "Stop Time: #{@timeblock.stopTime}"
+    puts "----------------------------------------------------------------------"
   end
 
 end
