@@ -129,13 +129,20 @@ def appointmentAdd
   month = $prompt.ask('Date (MM):')
   day = $prompt.ask('Date (DD):')
   year = $prompt.ask('Date (YYYY):')
-  start_time = $prompt.ask('Start Time (24h):')
-  stop_time = $prompt.ask('Stop Time (24h):')
+  start_time = $prompt.ask('Start Time (ex: 13:30):')
+  #stop_time = $prompt.ask('Stop Time (24h):')
+  temp = start_time.split(':')
+  hour = temp[0].to_i
+  minute = temp[1].to_i
   puts 'Will This Appointment Reoccur Weekly?'
   isWeekly = y_or_n()
   sp = get_sp_by_name(provider_name)
   service = sp.containsService(service_name)
-  sp.appointments.push(Appointment.new(TimeBlock.new(month, day, year, start_time, stop_time, isWeekly), service, client_name, sp))
+
+  start_datetime = DateTime.new(year.to_i, month.to_i, day.to_i, hour, minute)
+  #appt = Appointment.new(TimeBlock.new(month, day, year, start_time, stop_time, isWeekly), service, client_name, sp)
+  sp.add_appointment(service, TimeBlock.new(month, day, year, start_datetime, isWeekly, service.length), client_name)
+  #sp.appointments.push()
   successPrint()
 end
 

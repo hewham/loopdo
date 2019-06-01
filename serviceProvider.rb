@@ -56,22 +56,33 @@ class ServiceProvider
   def is_available(service, timeblock, isWeekly)
     #add check to make sure timeblock is in the future
     is_future_date = (timeblock.startTime >= DateTime.now)
+    puts is_future_date
 
     #check if provider offers service
     service_offered = containsService(service.name)
+    puts('past service_offered')
 
     #check provider's availability
     availability_blocks = @availability[timeblock.dayOfWeek]
-    provider_available = false
-    for block in availability_blocks do
-      if block.contains(timeblock)
-        provider_available = true
-      end
-    end
+    puts('past availability_blocks')
+    #IDK what is wrong with this but causes program to crash, commented out for now
+    # provider_available = false
+    # for block in availability_blocks do
+    #   if block.contains(timeblock)
+    #     provider_available = true
+    #   end
+    # end
+    #
+    provider_available = true
+
+    puts('here')
 
     #check for overlap with provider's appointments
     no_overlap_with_appointments = true
-    appointments.each do |appointment|
+    puts(@appointments)
+    puts(appointments)
+    puts('-----------------')
+    @appointments.each do |appointment|
       #check for overlap if either appointment is weekly
       if appointment.timeblock.isWeekly || isWeekly
         if appointment.timeblock.dayOfWeek == timeblock.dayOfWeek
@@ -96,8 +107,11 @@ class ServiceProvider
 
   def add_appointment(service, timeblock, client)
     #add appointment to provider's schedule
-    appointment = Appointment.new(timeblock, service, client, self)
-    @appointments << appointment
+    if is_available(service, timeblock, timeblock.isWeekly)
+      appointment = Appointment.new(timeblock, service, client, self)
+      @appointments << appointment
+    end
+
   end
 
 

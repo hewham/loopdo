@@ -12,7 +12,7 @@ class Appointment
     puts "#{Cyan} Client Name: #{@client_name}#{Reset}, #{Green} Provider Name:  #{@serviceProvider.name}#{Reset}, #{Yellow} Service Name:  #{@service.name}#{Reset}"
     puts "Date: #{@timeblock.month} / #{@timeblock.day} / #{@timeblock.year}"
     puts "Start Time: #{@timeblock.startTime}"
-    puts "Stop Time: #{@timeblock.stopTime}"
+    puts "Stop Time: #{@timeblock.endTime}"
     puts "----------------------------------------------------------------------"
   end
 

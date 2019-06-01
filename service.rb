@@ -1,3 +1,4 @@
+
 class Service
   attr_reader :name, :price, :length, :printDetails
   def initialize(name, price, length) (
@@ -11,8 +12,8 @@ class Service
     puts "#{Cyan}#{@name}#{Reset}, #{Green}$#{@price}#{Reset}, #{Yellow}#{@length} Minutes#{Reset}"
   end
 
-  def service_to_timeblock(startTime, isWeekly, date)
-    dayOfWeek = date.strftime("%A")
+  def service_to_timeblock(startTime, isWeekly)
+    dayOfWeek = startTime.strftime("%A")
     stopTime = startTime + ((length.to_f)/24)/60
     month = startTime.strftime("%m")
     day = startTime.strftime("%d")

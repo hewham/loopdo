@@ -1,12 +1,13 @@
 class TimeBlock
-  attr_reader :month, :day, :year, :startTime, :stopTime, :isWeekly
-  def initialize(month, day, year, startTime, stopTime, isWeekly) (
+  attr_reader :month, :day, :year, :startTime, :endTime, :dayOfWeek, :isWeekly
+  def initialize(month, day, year, startTime, isWeekly, length) (
     @month = month
     @day = day
     @year = year
-    @startTime = startTime #integer between 0 and 47
-    @stopTime = stopTime #integer between 0 and 47
+    @startTime = startTime
     @isWeekly = isWeekly
+    @endTime = startTime + ((length.to_f)/24)/60
+    @dayOfWeek = startTime.strftime("%A")
   )
   end
 
@@ -26,4 +27,7 @@ class TimeBlock
   	return contains(timeblock2) || overlaps_start || overlaps_end
   end
 
+  def calculate_endtime(startTime, length)
+    return startTime + ((length.to_f)/24)/60
+  end
 end
