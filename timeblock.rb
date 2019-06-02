@@ -20,11 +20,16 @@ class TimeBlock
 
   def overlaps(timeblock2)
   	#returns true if timeblocks overlap (regardless of date)
-  	overlaps_start = (timeblock2.startTime <= @startTime && 
-  		timeblock2.endTime > @startTime)
-  	overlaps_end = (timeblock2.startTime < @endTime && 
-  		timeblock2.endTime >= @endTime)
-  	return contains(timeblock2) || overlaps_start || overlaps_end
+  	# overlaps_start = (timeblock2.startTime <= @startTime &&
+  	# 	timeblock2.endTime > @startTime)
+  	# overlaps_end = (timeblock2.startTime < @endTime &&
+  	# 	timeblock2.endTime >= @endTime)
+  	# return contains(timeblock2) || overlaps_start || overlaps_end
+    check1 = (timeblock2.startTime < @endTime &&
+        timeblock2.endTime > @startTime)
+    check2 = (@startTime < timeblock2.endTime &&
+        @endTime > timeblock2.startTime)
+    return check1 || check2
   end
 
   def calculate_endtime(startTime, length)
