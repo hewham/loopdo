@@ -54,7 +54,7 @@ def serviceAdd
     sp = get_sp_by_name(provider_name)
     if sp
       sp.serviceAdd(Service.new(service_name, service_price, service_length))
-      successPrint()
+      #successPrint()
       break
     else
       serviceErrorMessage()

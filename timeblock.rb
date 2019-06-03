@@ -34,17 +34,16 @@ class TimeBlock
 
   def overlaps_time(timeblock2)
   	#returns true if timeblocks overlap (regardless of date)
-  	startTime1 = Time.parse(@startTime.to_s)
-  	startTime2 = Time.parse(timeblock2.startTime.to_s)
-  	endTime1 = Time.parse(@endTime.to_s)
-  	endTime2 = Time.parse(timeblock2.endTime.to_s)
+  	startTime1 = Time.parse(@startTime.strftime("%I:%M:%S %z"))
+  	startTime2 = Time.parse(timeblock2.startTime.strftime("%I:%M:%S %z"))
+  	endTime1 = Time.parse(@endTime.strftime("%I:%M:%S %z"))
+  	endTime2 = Time.parse(timeblock2.endTime.strftime("%I:%M:%S %z"))
 
   	check1 = (startTime2 < endTime1 &&
         endTime2 > startTime1)
-  	puts(check1)
+
     check2 = (startTime1 < endTime2 &&
         endTime1 > startTime2)
-    puts(check2)
     return check1 || check2
   end
 
