@@ -111,7 +111,7 @@ def y_or_n
 end
 
 def appointmentAdd
-  client_name = $prompt.ask('Your Name:')
+  client_name = $prompt.ask('Client Name:')
   puts "Hello #{client_name}! Choose Provider & Service to Schedule"
   servicePrint($all_sp)
   provider_name = $prompt.ask('Provider Name:')
