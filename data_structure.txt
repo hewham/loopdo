@@ -1,0 +1,44 @@
+services:
+{
+    "name" : {
+        "price" : 0,
+        "length" : 0
+    }
+}
+
+service_providers:
+{
+    "name" : {
+        "phone" : "",
+        "services" : [""],
+        "availability" : {
+                            "monday" : [false],
+                            "tuesday" : [false],
+                            "wednesday" : [false],
+                            "thursday" : [false],
+                            "friday" : [false],
+                        }
+    }
+}
+
+appointments:
+[
+    {
+        "date" : 0 (date enum),
+        "start_time" : 0 (time enum),
+        "service_name" : "",
+        "client_name" : "",
+        "service_provider_name" : "",
+    }
+]
+
+availability_blocks:
+[
+    {
+        "date" : 0 (date enum),
+        "start_time" : 0 (time enum),
+        "end_time" : 0 (time enum),
+        "service_provider_name" : "",
+        "is_available" : false
+    }
+]
