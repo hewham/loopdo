@@ -6,6 +6,7 @@ require_relative './timeblock'
 require_relative './print'
 require_relative './init'
 require_relative './colors'
+require_relative './availability'
 require 'tty-prompt'
 $prompt = TTY::Prompt.new
 
