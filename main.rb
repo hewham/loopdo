@@ -1,281 +1,168 @@
-
-require_relative './service'
-require_relative './serviceProvider'
-require_relative './appointment'
-require_relative './timeblock'
-require_relative './print'
-require_relative './init'
-require_relative './colors'
-require_relative './availability'
 require 'tty-prompt'
-$prompt = TTY::Prompt.new
+require 'time'
+require_relative 'models'
 
-def find_sp_by_service(serviceName)
-  sp_with_service = []
-  for sp in $all_sp do
-    for s in sp.services do
-      if s.name == serviceName
-        sp_with_service.push(sp)
-        break
-      end
+
+prompt = TTY::Prompt.new
+
+service_list =  []
+service_list.push(Service.new('spiritual healing', 200, 1))
+service_list.push(Service.new('yoga', 300, 2))
+service_list.push(Service.new('swimming',200,1))
+
+provider_list = []
+provider_list.push(Provider.new('Kai', 'spiritual healing', 7349908790))
+provider_list.push(Provider.new('Ashish', 'yoga, spiritual healing', 7890029087))
+
+appointment_list = []
+appointment_list.push(Appointment.new(Time.now, 'yoga', 'Matt', 'Ashish'))
+appointment_list.push(Appointment.new(Time.now, 'spiritual healing', 'Mack', 'Kai'))
+
+unavailability_list = []
+unavailability_list.push(Unavailability.new(Time.new(2020, 06, 12, 10, 0, 0, "-04:00"), 'Kai', 4))
+
+if !ARGV[0]
+  puts "Welcome to Hacker Fellows. Please use the following commands: "
+  puts "
+        service:add
+        service:delete
+        provider:add
+        provider:delete
+        appointment:add
+        schedule:view
+        availability:add
+        availability:delete
+        exit
+       "
+  response = prompt.ask("enter a command")
+end
+while response != 'exit'.downcase
+
+  if response == 'service:add'
+    name = prompt.ask('name:')
+    price = prompt.ask('price:')
+    length = prompt.ask('length:')
+    service_list.push(Service.new(name, price, length))
+    puts "New service successfully added!"
+    puts "Here is your new service list:
+          ------------------------------"
+    service_list.each do |service|
+      puts "
+            Service: #{service.name}
+            Price: $#{service.price}
+            Length: #{service.length} hrs
+           "
     end
-  end
-  return sp_with_service
-end
+    puts "
+          ------------------------------"
 
-def get_sp_by_name(name)
-  sp = $all_sp.select do |sp| 
-    sp.name == name
-  end
-  if sp.length == 1
-    return sp.first
-  else
-    return false
-  end
-end
-
-def serviceAdd
-  service_name = $prompt.ask('Service Name:')
-  service_price = $prompt.ask('Service Price:')
-  service_length = $prompt.ask('Service Length (Mins):')
-  loop do
-    spPrint($all_sp)
-    provider_name = $prompt.ask('Add to which provider?:')
-    sp = get_sp_by_name(provider_name)
-    if sp
-      sp.serviceAdd(Service.new(service_name, service_price, service_length))
-      successPrint()
-      break
-    else
-      serviceErrorMessage()
+  elsif response == 'service:delete'
+    name = prompt.ask('name:')
+    service_list.delete_if {|item| item.name == "#{name}"}
+    puts "Service successfully deleted!"
+    puts "Here is your new service list:
+          ------------------------------"
+    service_list.each do |service|
+      puts "
+            Service: #{service.name}
+            Price: $#{service.price}
+            Length: #{service.length} hrs
+           "
     end
-  end
-end
+    puts "
+          ------------------------------"
 
-def serviceRemove
-  puts "Choose Service to Remove"
-  servicePrint($all_sp)
-  provider_name = $prompt.ask('Service Provider:')
-  service_name = $prompt.ask('Service Name:')
-  spToRemove = nil
-  isFound = false
-  sp = $all_sp.select do |sp|
-    if sp.name == provider_name
-      spToRemove = sp
-      isFound = true
-      break      
+  elsif response == 'provider:add'
+    name = prompt.ask('name:')
+    service = prompt.ask('services:')
+    phone = prompt.ask('phone number:')
+    provider_list.push(Provider.new(name, service, phone))
+    puts "Service provider successfully added!"
+    puts "Here is your new provider list:
+          ------------------------------"
+    provider_list.each do |provider|
+      puts "
+            Provider: #{provider.name}
+            Services: #{provider.service}
+            Phone Number: #{provider.phone}
+           "
     end
-  end
-  if isFound
-    spToRemove.serviceRemove(service_name)
-    successPrint()
-  else
-    serviceErrorMessage()
-  end
-end
+    puts "
+          ------------------------------"
 
-def spAdd
-  provider_name = $prompt.ask('Provider Name:')
-  provider_phone = $prompt.ask('Provider Phone Number:')
-  $all_sp.push(ServiceProvider.new(provider_name, provider_phone, [], {}, []))
-  successPrint()
-end
-
-def spRemove
-  provider_name = $prompt.ask('Provider Name To Remove:')
-  $all_sp.each do |sp|
-    if sp.name == provider_name
-      puts "Deleting #{provider_name}"
-      confirm = y_or_n()
-      if confirm
-        $all_sp.delete(sp)
-        successPrint()
-      else
-        puts 'Did Not Delete'
-      end
+  elsif response == 'provider:delete'
+    name = prompt.ask('name:')
+    provider_list.delete_if {|item| item.name == "#{name}" }
+    puts "Service provider successfully deleted!"
+    puts "Here is your new provider list:
+          ------------------------------"
+    provider_list.each do |provider|
+      puts "
+            Provider: #{provider.name}
+            Services: #{provider.service}
+            Phone Number: #{provider.phone}
+           "
     end
-  end
-end
+    puts "
+          ------------------------------"
 
-def y_or_n
-  loop do
-    yn = $prompt.ask('(y/n):')
-    if yn == 'y'
-      return true
-    elsif yn == 'n'
-      return false
-    else
-      puts "Enter y or n"
-    end
-  end
-end
+  elsif response == 'appointment:add'
+    name_client = prompt.ask('client name:')
+    name_service = prompt.ask('service name:')
+    name_provider = prompt.ask('provider name:')
+    month = prompt.ask('what month do you want your appointment:')
+    day = prompt.ask('What day do you want your appointment:')
+    time_client = prompt.ask('what time do you want your appointment (ex 01:30):')
+    hour = time_client.slice(0..1)
+    min = time_client.slice(3,4)
 
-def appointmentAdd
-  client_name = $prompt.ask('Client Name:')
-  puts "Hello #{client_name}! Choose Provider & Service to Schedule"
-  servicePrint($all_sp)
-  provider_name = $prompt.ask('Provider Name:')
-  service_name = $prompt.ask('Service Name:')
-  month = $prompt.ask('Date (MM):')
-  day = $prompt.ask('Date (DD):')
-  year = $prompt.ask('Date (YYYY):')
-  start_time = $prompt.ask('Start Time (ex: 13:30):')
-  temp = start_time.split(':')
-  hour = temp[0].to_i
-  minute = temp[1].to_i
-  puts 'Will This Appointment Reoccur Weekly?'
-  isWeekly = y_or_n()
-  sp = get_sp_by_name(provider_name)
-  service = sp.containsService(service_name)
+    time = Time.new(2020, month.to_i, day.to_i, hour.to_i, min.to_i)
+    appointment = Appointment.new(time, name_service, name_client, name_provider)
+    # use these info to create an appointment object
+    appointment_validator(appointment, service_list, appointment_list, provider_list, unavailability_list)
 
-  start_datetime = DateTime.new(year.to_i, month.to_i, day.to_i, hour, minute)
-  sp.add_appointment(service, TimeBlock.new(start_datetime, isWeekly, service.length), client_name)
-  successPrint()
-end
 
-def appointmentRemove
-  spPrint($all_sp)
-  provider_name = $prompt.ask('Provider Name To Cancel Appt:')
-  client_name = $prompt.ask('Your Name:')
-  sp = get_sp_by_name(provider_name)
-  i = 1;
-  sp.appointments.each do |a|
-    if a.client_name == client_name
-      puts "#{BgCyan}APPOINTMENT #{i}#{Reset}"
-      a.printDetails
-      i += 1
-    end
-  end
-  if i == 1
-    puts "No appointments found for client (#{Cyan}#{client_name}#{Reset}) under service provider (#{Magenta}#{provider_name}#{Reset})."
-  else
-    loop do
-      indexRemove = $prompt.ask('Choose Appointment to remove by number (q to quit):')
-      if indexRemove.to_i - 1 >= 0 && indexRemove.to_i <= i - 1
-        # this could be a lot better but oh well
-        i = 1;
-        apptToRemove = nil
-        sp.appointments.each do |a|
-          if a.client_name == client_name
-            if i == indexRemove.to_i
-              apptToRemove = a
-              break
-            end
-            i += 1
+  elsif response == 'schedule:view'
+    name_provider = prompt.ask('Provider name:')
+    month = prompt.ask('What month would you like to view:')
+    puts "Here is your provider's schedule for the day:
+         ----------------------------------------------"
+    provider_list.each do |provider|
+      if provider.name.include?(name_provider)
+        appointment_list.each do |appointment|
+          if appointment.provider.include?(provider.name) && appointment.time.month == month.to_i
+            puts "
+                  Client: #{appointment.client}
+                  Service: #{appointment.service}
+                  Time: #{appointment.time}
+
+           ----------------------------------------------"
           end
         end
-        sp.appointments.delete(apptToRemove)
-        successPrint()
-        break
-      elsif indexRemove == 'q'
-        break
-      else
-        puts "Choose an existing appointment"
       end
     end
+
+
+  elsif response == 'availability:add'
+    puts "
+          功能正在开发中
+          under construction ...
+         "
+
+  elsif response == 'availability:delete'
+    del_provider = prompt.ask('Provider name:')
+    del_month = prompt.ask('What month would you like to delete:')
+    del_day = prompt.ask('What day would you like to delete:')
+    del_hour = prompt.ask('What time would you like to delete:')
+    del_length = prompt.ask('How long would you like to leave:')
+    hour = del_hour.slice(0..1)
+    del_min = del_hour.slice(3,4)
+    del_time = Time.new(2020, del_month.to_i, del_day.to_i, hour.to_i, del_min.to_i)
+    unavailability_list.push(Unavailability.new(del_time, del_provider, del_length ))
+    puts "
+          Enjoy your break! :)
+         "
+
   end
+  response = prompt.ask("enter a command")
 end
-
-def availabilityAdd
-  provider_name = $prompt.ask('Provider Name:')
-  month = $prompt.ask('Date (MM):')
-  day = $prompt.ask('Date (DD):')
-  year = $prompt.ask('Date (YYYY):')
-  start_time = $prompt.ask('Start Time (ex: 13:30):')
-  end_time = $prompt.ask('End Time (ex: 14:30):')
-  start_temp = start_time.split(':')
-  start_hour = start_temp[0].to_i
-  start_minute = start_temp[1].to_i
-
-  end_temp = end_time.split(':')
-  end_hour = end_temp[0].to_i
-  end_minute = end_temp[1].to_i
-
-  sp = get_sp_by_name(provider_name)
-
-  start_datetime = DateTime.new(year.to_i, month.to_i, day.to_i, start_hour, start_minute)
-  end_datetime = DateTime.new(year.to_i, month.to_i, day.to_i, end_hour, end_minute)
-  #sp.add_appointment(service, TimeBlock.new(month, day, year, start_datetime, isWeekly, service.length), client_name)
-  sp.add_availability(start_datetime, end_datetime)
-  successPrint()
-end
-
-def scheduleView
-  loop do
-    puts "Choose a Service Provider to see their schedule:"
-    spPrint($all_sp)
-    provider_name = $prompt.ask('Provider Name (q to quit):')
-    spToUse = nil
-    isFound = false
-    sp = $all_sp.select do |sp|
-      if sp.name == provider_name
-        spToUse = sp
-        isFound = true
-        break      
-      end
-    end
-    if isFound
-      spToUse.scheduleView()
-      break
-    elsif provider_name == 'q'
-      break
-    else
-      serviceErrorMessage()
-    end
-  end
-end
-
-def list_commands
-  puts "#{BgCyan}COMMAND LIST:#{Reset}"
-  puts "--------------------------------"
-  puts "#{Cyan}commands#{Reset} | View this list of commands"
-  puts "#{Cyan}s:add#{Reset} | Add service"
-  puts "#{Cyan}s:remove#{Reset} | Remove service"
-  puts "#{Cyan}s:view#{Reset} | Display all services"
-  puts "#{Cyan}sp:add#{Reset} | Add service provider"
-  puts "#{Cyan}sp:remove#{Reset} | Remove service provider"
-  puts "#{Cyan}sp:view#{Reset} | Display all service providers"
-  puts "#{Cyan}appt:add#{Reset} | Add new appointment"
-  puts "#{Cyan}appt:remove#{Reset} | Remove appointment"
-  puts "#{Cyan}avail:add#{Reset} | Add new availability block"
-  puts "#{Cyan}schedule:view#{Reset} | View schedule"
-  puts "--------------------------------"
-end
-
-commands = {
-  's:add' => Proc.new{serviceAdd},
-  's:remove' => Proc.new{serviceRemove},
-  's:view' => Proc.new{servicePrint($all_sp)},
-  'sp:add' => Proc.new{spAdd},
-  'sp:remove' => Proc.new{spRemove},
-  'sp:view' => Proc.new{spPrint($all_sp)},
-  'appt:add' => Proc.new{appointmentAdd},
-  'appt:remove' => Proc.new{appointmentRemove},
-  'avail:add' => Proc.new{availabilityAdd},
-  'schedule:view' => Proc.new{scheduleView},
-  'commands' => Proc.new{list_commands}
-}
-
-# INITIALIZE
-$all_sp = initData
-
-loop do
-  next_prompt = $prompt.ask('Please enter a command:')
-  puts ''
-  isCommand = false
-  commands.each do |command, function|
-    if next_prompt == command
-      function.call()
-      isCommand = true
-    end
-  end
-  if !isCommand
-    puts "#{BgRed}Unknown command:#{Reset} #{Red}#{next_prompt}#{Reset}"
-    puts ""
-    list_commands
-    next
-  end
-end
-
-
-
