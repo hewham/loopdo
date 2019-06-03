@@ -130,7 +130,6 @@ def appointmentAdd
   day = $prompt.ask('Date (DD):')
   year = $prompt.ask('Date (YYYY):')
   start_time = $prompt.ask('Start Time (ex: 13:30):')
-  #stop_time = $prompt.ask('Stop Time (24h):')
   temp = start_time.split(':')
   hour = temp[0].to_i
   minute = temp[1].to_i
@@ -140,9 +139,7 @@ def appointmentAdd
   service = sp.containsService(service_name)
 
   start_datetime = DateTime.new(year.to_i, month.to_i, day.to_i, hour, minute)
-  #appt = Appointment.new(TimeBlock.new(month, day, year, start_time, stop_time, isWeekly), service, client_name, sp)
-  sp.add_appointment(service, TimeBlock.new(month, day, year, start_datetime, isWeekly, service.length), client_name)
-  #sp.appointments.push()
+  sp.add_appointment(service, TimeBlock.new(start_datetime, isWeekly, service.length), client_name)
   successPrint()
 end
 

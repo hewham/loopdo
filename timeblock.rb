@@ -1,9 +1,9 @@
 class TimeBlock
   attr_reader :month, :day, :year, :startTime, :endTime, :dayOfWeek, :isWeekly
-  def initialize(month, day, year, startTime, isWeekly, length) (
-    @month = month
-    @day = day
-    @year = year
+  def initialize(startTime, isWeekly, length) (
+    @month = startTime.strftime("%m")
+    @day = startTime.strftime("%d")
+    @year = startTime.strftime("%Y")
     @startTime = startTime
     @isWeekly = isWeekly
     @endTime = startTime + ((length.to_f)/24)/60

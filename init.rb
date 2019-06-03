@@ -16,7 +16,7 @@ def initData
   all_sp.push(ServiceProvider.new('Sue', '1111111112', serviceSet2, {}, []))
 
   start_datetime = DateTime.new(2019, 12, 12, 12)
-  appointment1 = Appointment.new(TimeBlock.new(12, 12, 2019, start_datetime, false, 120), serviceSet1[1], 'Larry', all_sp[0])
+  appointment1 = Appointment.new(TimeBlock.new(start_datetime, false, 120), serviceSet1[1], 'Larry', all_sp[0])
 
   all_sp[0].appointments.push(appointment1)
   return all_sp

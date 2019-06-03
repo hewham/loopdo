@@ -33,8 +33,11 @@ class ServiceProvider
 
   def scheduleView()
     puts "#{Magenta}#{@name}'s#{Reset} Appointments:"
+    i = 1;
     @appointments.each do |a|
+      puts "#{BgCyan}APPOINTMENT #{i}#{Reset}"
       a.printDetails
+      i += 1
     end
   end
 
