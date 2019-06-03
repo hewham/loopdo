@@ -2,6 +2,7 @@
   # phoneNum
   # services = []
   # availability = hash{day:[TimeBlocks]}
+  # availability = [TimeBlocks]
   # appointments = []
 
 class ServiceProvider
@@ -36,6 +37,16 @@ class ServiceProvider
     i = 1;
     @appointments.each do |a|
       puts "#{BgCyan}APPOINTMENT #{i}#{Reset}"
+      a.printDetails
+      i += 1
+    end
+  end
+
+  def availabilityView()
+    puts "#{Magenta}#{@name}#{Reset}'s Availability:"
+    i = 1;
+    @availability.each do |a|
+      puts "#{BgCyan}AVAILABILITY #{i}#{Reset}"
       a.printDetails
       i += 1
     end
@@ -110,10 +121,9 @@ class ServiceProvider
 
   end
 
-  def add_availability(start_timeblock, end_timeblock)
+  def add_availability(timeblock)
     #need to add a check here
-    availability_block = Availability.new(start_timeblock, end_timeblock, self)
-    @availability << availability_block
+    @availability << timeblock
   end
 
 

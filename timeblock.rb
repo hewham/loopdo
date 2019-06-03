@@ -50,4 +50,8 @@ class TimeBlock
   def calculate_endtime(startTime, length)
     return startTime + ((length.to_f)/24)/60
   end
+
+  def printDetails
+    puts "Date: #{Green}#{@startTime.month}/#{@startTime.day}/#{@startTime.year}#{Reset} | Start: #{Green}#{@startTime.strftime("%T")}#{Reset} | Stop: #{Green}#{@endTime.strftime("%T")}#{Reset} | Weekly #{Green}#{@isWeekly}#{Reset}"
+  end
 end

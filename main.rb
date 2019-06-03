@@ -177,12 +177,16 @@ def appointmentRemove
 end
 
 def availabilityAdd
+  spPrint($all_sp)
   provider_name = $prompt.ask('Provider Name:')
   month = $prompt.ask('Date (MM):')
   day = $prompt.ask('Date (DD):')
   year = $prompt.ask('Date (YYYY):')
   start_time = $prompt.ask('Start Time (ex: 13:30):')
   end_time = $prompt.ask('End Time (ex: 14:30):')
+  puts 'Will This Appointment Reoccur Weekly?'
+  isWeekly = y_or_n()
+
   start_temp = start_time.split(':')
   start_hour = start_temp[0].to_i
   start_minute = start_temp[1].to_i
@@ -191,16 +195,19 @@ def availabilityAdd
   end_hour = end_temp[0].to_i
   end_minute = end_temp[1].to_i
 
+  length = (end_hour * 60 +end_minute) - (start_hour * 60 + start_minute)
+
   sp = get_sp_by_name(provider_name)
 
   start_datetime = DateTime.new(year.to_i, month.to_i, day.to_i, start_hour, start_minute)
-  end_datetime = DateTime.new(year.to_i, month.to_i, day.to_i, end_hour, end_minute)
+  timeblock = TimeBlock.new(start_datetime, isWeekly, length)
+
   #sp.add_appointment(service, TimeBlock.new(month, day, year, start_datetime, isWeekly, service.length), client_name)
-  sp.add_availability(start_datetime, end_datetime)
+  sp.add_availability(timeblock)
   successPrint()
 end
 
-def scheduleView
+def scheduleView(type)
   loop do
     puts "Choose a Service Provider to see their schedule:"
     spPrint($all_sp)
@@ -215,8 +222,13 @@ def scheduleView
       end
     end
     if isFound
-      spToUse.scheduleView()
-      break
+      if type == 'appt'
+        spToUse.scheduleView()
+        break
+      elsif type == 'avail'
+        spToUse.availabilityView()
+        break
+      end
     elsif provider_name == 'q'
       break
     else
@@ -252,7 +264,8 @@ commands = {
   'appt:add' => Proc.new{appointmentAdd},
   'appt:remove' => Proc.new{appointmentRemove},
   'avail:add' => Proc.new{availabilityAdd},
-  'schedule:view' => Proc.new{scheduleView},
+  'avail:view' => Proc.new{scheduleView('avail')},
+  'schedule:view' => Proc.new{scheduleView('appt')},
   'commands' => Proc.new{list_commands}
 }
 
