@@ -136,6 +136,7 @@ def appointmentAdd
   minute = temp[1].to_i
   puts 'Will This Appointment Reoccur Weekly?'
   isWeekly = y_or_n()
+  puts(isWeekly)
   sp = get_sp_by_name(provider_name)
   service = sp.containsService(service_name)
 
