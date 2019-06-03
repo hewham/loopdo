@@ -10,11 +10,6 @@ require_relative './availability'
 require 'tty-prompt'
 $prompt = TTY::Prompt.new
 
-def successPrint
-  puts 'Success!'
-  puts ''
-end
-
 def find_sp_by_service(serviceName)
   sp_with_service = []
   for sp in $all_sp do
@@ -37,13 +32,6 @@ def get_sp_by_name(name)
   else
     return false
   end
-end
-
-def serviceErrorMessage
-  puts ''
-  puts 'Service Provider Not Found...'
-  puts 'Choose from the following:'
-  spPrint($all_sp)
 end
 
 def serviceAdd
@@ -136,13 +124,55 @@ def appointmentAdd
   minute = temp[1].to_i
   puts 'Will This Appointment Reoccur Weekly?'
   isWeekly = y_or_n()
-  puts(isWeekly)
   sp = get_sp_by_name(provider_name)
   service = sp.containsService(service_name)
 
   start_datetime = DateTime.new(year.to_i, month.to_i, day.to_i, hour, minute)
   sp.add_appointment(service, TimeBlock.new(start_datetime, isWeekly, service.length), client_name)
   successPrint()
+end
+
+def appointmentRemove
+  spPrint($all_sp)
+  provider_name = $prompt.ask('Provider Name To Cancel Appt:')
+  client_name = $prompt.ask('Your Name:')
+  sp = get_sp_by_name(provider_name)
+  i = 1;
+  sp.appointments.each do |a|
+    if a.client_name == client_name
+      puts "#{BgCyan}APPOINTMENT #{i}#{Reset}"
+      a.printDetails
+      i += 1
+    end
+  end
+  if i == 1
+    puts "No appointments found for client (#{Cyan}#{client_name}#{Reset}) under service provider (#{Magenta}#{provider_name}#{Reset})."
+  else
+    loop do
+      indexRemove = $prompt.ask('Choose Appointment to remove by number (q to quit):')
+      if indexRemove.to_i - 1 >= 0 && indexRemove.to_i <= i - 1
+        # sp.appointments.delete_at(indexRemove.to_i - 1)
+        i = 1;
+        apptToRemove = nil
+        sp.appointments.each do |a|
+          if a.client_name == client_name
+            if i == indexRemove.to_i
+              apptToRemove = a
+              break
+            end
+            i += 1
+          end
+        end
+        sp.appointments.delete(apptToRemove)
+        successPrint()
+        break
+      elsif indexRemove == 'q'
+        break
+      else
+        puts "Choose an existing appointment"
+      end
+    end
+  end
 end
 
 def availabilityAdd
@@ -170,36 +200,42 @@ def availabilityAdd
 end
 
 def scheduleView
-  puts "Choose a Service Provider to see their schedule:"
-  spPrint($all_sp)
-  provider_name = $prompt.ask('Provider Name:')
-  spToUse = nil
-  isFound = false
-  sp = $all_sp.select do |sp|
-    if sp.name == provider_name
-      spToUse = sp
-      isFound = true
-      break      
+  loop do
+    puts "Choose a Service Provider to see their schedule:"
+    spPrint($all_sp)
+    provider_name = $prompt.ask('Provider Name (q to quit):')
+    spToUse = nil
+    isFound = false
+    sp = $all_sp.select do |sp|
+      if sp.name == provider_name
+        spToUse = sp
+        isFound = true
+        break      
+      end
+    end
+    if isFound
+      spToUse.scheduleView()
+      break
+    elsif provider_name == 'q'
+      break
+    else
+      serviceErrorMessage()
     end
   end
-  if isFound
-    spToUse.scheduleView()
-  else
-    serviceErrorMessage()
-  end
-
 end
 
 def list_commands
   puts "#{BgCyan}COMMAND LIST:#{Reset}"
   puts "--------------------------------"
+  puts "#{Cyan}commands#{Reset} | View this list of commands"
   puts "#{Cyan}s:add#{Reset} | Add service"
   puts "#{Cyan}s:remove#{Reset} | Remove service"
-  puts "#{Cyan}s:list#{Reset} | Display all services"
+  puts "#{Cyan}s:view#{Reset} | Display all services"
   puts "#{Cyan}sp:add#{Reset} | Add service provider"
   puts "#{Cyan}sp:remove#{Reset} | Remove service provider"
-  puts "#{Cyan}sp:list#{Reset} | Display all service providers"
+  puts "#{Cyan}sp:view#{Reset} | Display all service providers"
   puts "#{Cyan}appt:add#{Reset} | Add new appointment"
+  puts "#{Cyan}appt:remove#{Reset} | Add new appointment"
   puts "#{Cyan}avail:add#{Reset} | Add new availability block"
   puts "#{Cyan}schedule:view#{Reset} | View schedule"
   puts "--------------------------------"
@@ -208,13 +244,15 @@ end
 commands = {
   's:add' => Proc.new{serviceAdd},
   's:remove' => Proc.new{serviceRemove},
-  's:list' => Proc.new{servicePrint($all_sp)},
+  's:view' => Proc.new{servicePrint($all_sp)},
   'sp:add' => Proc.new{spAdd},
   'sp:remove' => Proc.new{spRemove},
-  'sp:list' => Proc.new{spPrint($all_sp)},
+  'sp:view' => Proc.new{spPrint($all_sp)},
   'appt:add' => Proc.new{appointmentAdd},
+  'appt:remove' => Proc.new{appointmentRemove},
   'avail:add' => Proc.new{availabilityAdd},
   'schedule:view' => Proc.new{scheduleView},
+  'commands' => Proc.new{list_commands}
 }
 
 # INITIALIZE
@@ -231,7 +269,8 @@ loop do
     end
   end
   if !isCommand
-    puts "Unknown command #{Red}#{next_prompt}#{Reset}"
+    puts "#{BgRed}Unknown command:#{Reset} #{Red}#{next_prompt}#{Reset}"
+    puts ""
     list_commands
     next
   end

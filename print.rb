@@ -1,3 +1,16 @@
+
+def successPrint
+  puts 'Success!'
+  puts ''
+end
+
+def serviceErrorMessage
+  puts ''
+  puts 'Service Provider Not Found...'
+  puts 'Choose from the following:'
+  spPrint($all_sp)
+end
+
 def spPrint(all_sp)
   puts "#{BgMagenta}SERVICE PROVIDERS:#{Reset}"
   puts '------------------'
@@ -16,6 +29,4 @@ def servicePrint(all_sp)
   end
   puts '------------------'
   puts ''
-
-
 end
