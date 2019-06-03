@@ -152,7 +152,7 @@ def appointmentRemove
     loop do
       indexRemove = $prompt.ask('Choose Appointment to remove by number (q to quit):')
       if indexRemove.to_i - 1 >= 0 && indexRemove.to_i <= i - 1
-        # sp.appointments.delete_at(indexRemove.to_i - 1)
+        # this could be a lot better but oh well
         i = 1;
         apptToRemove = nil
         sp.appointments.each do |a|
@@ -236,7 +236,7 @@ def list_commands
   puts "#{Cyan}sp:remove#{Reset} | Remove service provider"
   puts "#{Cyan}sp:view#{Reset} | Display all service providers"
   puts "#{Cyan}appt:add#{Reset} | Add new appointment"
-  puts "#{Cyan}appt:remove#{Reset} | Add new appointment"
+  puts "#{Cyan}appt:remove#{Reset} | Remove appointment"
   puts "#{Cyan}avail:add#{Reset} | Add new availability block"
   puts "#{Cyan}schedule:view#{Reset} | View schedule"
   puts "--------------------------------"
