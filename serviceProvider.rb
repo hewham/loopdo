@@ -10,7 +10,7 @@ class ServiceProvider
     @name = name
     @phoneNum = phoneNum
     @services = services
-    @availability = availability #day of week => array of timeblocks
+    @availability = availability
     @appointments = appointments
   )
   end
@@ -115,6 +115,12 @@ class ServiceProvider
       @appointments << appointment
     end
 
+  end
+
+  def add_availability(start_timeblock, end_timeblock)
+    #need to add a check here
+    availability_block = Availability.new(start_timeblock, end_timeblock, self)
+    @availability << availability_block
   end
 
 

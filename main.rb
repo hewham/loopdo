@@ -144,7 +144,29 @@ def appointmentAdd
 end
 
 def availabilityAdd
+  provider_name = $prompt.ask('Provider Name:')
+  month = $prompt.ask('Date (MM):')
+  day = $prompt.ask('Date (DD):')
+  year = $prompt.ask('Date (YYYY):')
+  start_time = $prompt.ask('Start Time (ex: 13:30):')
+  end_time = $prompt.ask('End Time (ex: 14:30):')
+  start_temp = start_time.split(':')
+  start_hour = start_temp[0].to_i
+  start_minute = start_temp[1].to_i
+
+  end_temp = end_time.split(':')
+  end_hour = end_temp[0].to_i
+  end_minute = end_temp[1].to_i
+
+  sp = get_sp_by_name(provider_name)
+
+  start_datetime = DateTime.new(year.to_i, month.to_i, day.to_i, start_hour, start_minute)
+  end_datetime = DateTime.new(year.to_i, month.to_i, day.to_i, end_hour, end_minute)
+  #sp.add_appointment(service, TimeBlock.new(month, day, year, start_datetime, isWeekly, service.length), client_name)
+  sp.add_availability(start_datetime, end_datetime)
+  successPrint()
 end
+
 def scheduleView
   puts "Choose a Service Provider to see their schedule:"
   spPrint($all_sp)
