@@ -87,11 +87,11 @@ class ServiceProvider
     puts('-----------------')
     @appointments.each do |appointment|
       #check for overlap if either appointment is weekly
+
       if appointment.timeblock.isWeekly || isWeekly
         if appointment.timeblock.dayOfWeek == timeblock.dayOfWeek
-          if appointment.timeblock.overlaps(timeblock)
+          if appointment.timeblock.overlaps_time(timeblock)
             no_overlap_with_appointments = false
-            break
           end
         end
       end
@@ -99,18 +99,17 @@ class ServiceProvider
 
       if appointment.timeblock.overlaps(timeblock)
         no_overlap_with_appointments = false
-        break
       end
-
-      return is_future_date && service_offered && 
-      provider_available && no_overlap_with_appointments
     end
+    return is_future_date && service_offered && 
+      provider_available && no_overlap_with_appointments
 
   end
 
   def add_appointment(service, timeblock, client)
     #add appointment to provider's schedule
     if is_available(service, timeblock, timeblock.isWeekly)
+      puts("Success!")
       appointment = Appointment.new(timeblock, service, client, self)
       @appointments << appointment
     end
