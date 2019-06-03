@@ -39,11 +39,12 @@ def serviceAdd
   service_price = $prompt.ask('Service Price:')
   service_length = $prompt.ask('Service Length (Mins):')
   loop do
+    spPrint($all_sp)
     provider_name = $prompt.ask('Add to which provider?:')
     sp = get_sp_by_name(provider_name)
     if sp
       sp.serviceAdd(Service.new(service_name, service_price, service_length))
-      #successPrint()
+      successPrint()
       break
     else
       serviceErrorMessage()
@@ -54,8 +55,8 @@ end
 def serviceRemove
   puts "Choose Service to Remove"
   servicePrint($all_sp)
-  service_name = $prompt.ask('Service Name:')
   provider_name = $prompt.ask('Service Provider:')
+  service_name = $prompt.ask('Service Name:')
   spToRemove = nil
   isFound = false
   sp = $all_sp.select do |sp|
