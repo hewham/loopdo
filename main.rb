@@ -118,7 +118,11 @@ def appointmentAdd
   servicePrint($all_sp)
   puts 'Provider Name:'
   sp = select_sp()
-  service_name = $prompt.ask('Service Name:')
+  serv_names = []
+  sp.services.each do |serv|
+    serv_names << serv.name
+  end
+  service_name = $prompt.select("#{BgMagenta}Service Name:#{Reset}", serv_names, cycle: true)
   month = $prompt.ask('Date (MM):')
   day = $prompt.ask('Date (DD):')
   year = $prompt.ask('Date (YYYY):')
