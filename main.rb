@@ -34,14 +34,21 @@ def get_sp_by_name(name)
   end
 end
 
+def select_sp
+  sp_names = []
+  $all_sp.each do |sp|
+    sp_names << sp.name
+  end
+  get_sp_by_name($prompt.select('Service Provider:', sp_names, cycle: true))
+end
+
 def serviceAdd
   service_name = $prompt.ask('Service Name:')
   service_price = $prompt.ask('Service Price:')
   service_length = $prompt.ask('Service Length (Mins):')
   loop do
     spPrint($all_sp)
-    provider_name = $prompt.ask('Add to which provider?:')
-    sp = get_sp_by_name(provider_name)
+    sp = select_sp()
     if sp
       sp.serviceAdd(Service.new(service_name, service_price, service_length))
       successPrint()
@@ -55,22 +62,23 @@ end
 def serviceRemove
   puts "Choose Service to Remove"
   servicePrint($all_sp)
-  provider_name = $prompt.ask('Service Provider:')
-  service_name = $prompt.ask('Service Name:')
-  spToRemove = nil
-  isFound = false
-  sp = $all_sp.select do |sp|
-    if sp.name == provider_name
-      spToRemove = sp
-      isFound = true
-      break      
-    end
+
+  sp = select_sp()
+  service_hash = {}
+  sp.services.each do |s|
+    key = s.getDetails
+    service_hash[key] = s
   end
-  if isFound
-    spToRemove.serviceRemove(service_name)
-    successPrint()
+  if sp.services.length == 0
+    puts "No services found for service provider (#{Magenta}#{provider_name}#{Reset})."
   else
-    serviceErrorMessage()
+    loop do
+      service_keys = service_hash.keys
+      serv_to_be_deleted = $prompt.select("Choose Service to remove", service_keys, cycle: true)
+      sp.services.delete(service_hash[serv_to_be_deleted])
+      successPrint()
+      break
+    end
   end
 end
 
@@ -277,40 +285,66 @@ def list_commands
   puts "--------------------------------"
 end
 
+# commands = {
+#   's:add' => Proc.new{serviceAdd},
+#   's:remove' => Proc.new{serviceRemove},
+#   's:view' => Proc.new{servicePrint($all_sp)},
+#   'sp:add' => Proc.new{spAdd},
+#   'sp:remove' => Proc.new{spRemove},
+#   'sp:view' => Proc.new{spPrint($all_sp)},
+#   'appt:add' => Proc.new{appointmentAdd},
+#   'appt:remove' => Proc.new{appointmentRemove},
+#   'avail:add' => Proc.new{availabilityAdd},
+#   'avail:remove' => Proc.new{availabilityRemove},
+#   'avail:view' => Proc.new{scheduleView('avail')},
+#   'schedule:view' => Proc.new{scheduleView('appt')},
+#   'commands' => Proc.new{list_commands}
+# }
+
 commands = {
-  's:add' => Proc.new{serviceAdd},
-  's:remove' => Proc.new{serviceRemove},
-  's:view' => Proc.new{servicePrint($all_sp)},
-  'sp:add' => Proc.new{spAdd},
-  'sp:remove' => Proc.new{spRemove},
-  'sp:view' => Proc.new{spPrint($all_sp)},
-  'appt:add' => Proc.new{appointmentAdd},
-  'appt:remove' => Proc.new{appointmentRemove},
-  'avail:add' => Proc.new{availabilityAdd},
-  'avail:remove' => Proc.new{availabilityRemove},
-  'avail:view' => Proc.new{scheduleView('avail')},
-  'schedule:view' => Proc.new{scheduleView('appt')},
-  'commands' => Proc.new{list_commands}
+  'Add service' => Proc.new{serviceAdd},
+  'Remove service' => Proc.new{serviceRemove},
+  'View services' => Proc.new{servicePrint($all_sp)},
+  'Add service provider' => Proc.new{spAdd},
+  'Remove service provider' => Proc.new{spRemove},
+  'View service providers' => Proc.new{spPrint($all_sp)},
+  'Add appointments' => Proc.new{appointmentAdd},
+  'Remove appointments' => Proc.new{appointmentRemove},
+  'Add availability' => Proc.new{availabilityAdd},
+  'Remove availability' => Proc.new{availabilityRemove},
+  'View availability' => Proc.new{scheduleView('avail')},
+  'View schedule' => Proc.new{scheduleView('appt')},
+  'Exit program' => 0
 }
 
 # INITIALIZE
 $all_sp = initData
 
-loop do
-  next_prompt = $prompt.ask('Please enter a command:')
-  puts ''
-  isCommand = false
-  commands.each do |command, function|
-    if next_prompt == command
-      function.call()
-      isCommand = true
-    end
-  end
-  if !isCommand
-    puts "#{BgRed}Unknown command:#{Reset} #{Red}#{next_prompt}#{Reset}"
-    puts ""
-    list_commands
-    next
+# loop do
+#   next_prompt = $prompt.ask('Please enter a command:')
+#   puts ''
+#   isCommand = false
+#   commands.each do |command, function|
+#     if next_prompt == command
+#       function.call()
+#       isCommand = true
+#     end
+#   end
+#   if !isCommand
+#     puts "#{BgRed}Unknown command:#{Reset} #{Red}#{next_prompt}#{Reset}"
+#     puts ""
+#     list_commands
+#     next
+#   end
+# end
+
+user_is_done = false
+while !user_is_done
+  user_task = $prompt.select("What would you like to do?", commands.keys, cycle: true)
+  if user_task != 'Exit program'
+    commands[user_task].call()
+  else
+    user_is_done = true
   end
 end
 
