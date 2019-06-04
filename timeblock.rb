@@ -52,6 +52,10 @@ class TimeBlock
   end
 
   def printDetails
-    puts "Date: #{Green}#{@startTime.month}/#{@startTime.day}/#{@startTime.year}#{Reset} | Start: #{Green}#{@startTime.strftime("%T")}#{Reset} | Stop: #{Green}#{@endTime.strftime("%T")}#{Reset} | Weekly #{Green}#{@isWeekly}#{Reset}"
+    puts self.getDetails
+  end
+
+  def getDetails
+    "Date: #{Green}#{@startTime.month}/#{@startTime.day}/#{@startTime.year}#{Reset} | Start: #{Green}#{@startTime.strftime("%T")}#{Reset} | Stop: #{Green}#{@endTime.strftime("%T")}#{Reset} | Weekly #{Green}#{@isWeekly}#{Reset}"
   end
 end

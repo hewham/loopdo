@@ -207,6 +207,28 @@ def availabilityAdd
   successPrint()
 end
 
+def availabilityRemove
+  spPrint($all_sp)
+  provider_name = $prompt.ask('Provider Name To Remove Availability:')
+  sp = get_sp_by_name(provider_name)
+  availability_hash = {}
+  sp.availability.each do |av|
+    key = av.getDetails
+    availability_hash[key] = av
+  end
+  if sp.availability.length == 0
+    puts "No availability found for service provider (#{Magenta}#{provider_name}#{Reset})."
+  else
+    loop do
+      availability_keys = availability_hash.keys
+      av_to_be_deleted = $prompt.select("Choose Availability to remove", availability_keys, cycle: true)
+      sp.availability.delete(availability_hash[av_to_be_deleted])
+      successPrint()
+      break
+    end
+  end
+end
+
 def scheduleView(type)
   loop do
     puts "Choose a Service Provider to see their schedule:"
@@ -250,6 +272,7 @@ def list_commands
   puts "#{Cyan}appt:add#{Reset} | Add new appointment"
   puts "#{Cyan}appt:remove#{Reset} | Remove appointment"
   puts "#{Cyan}avail:add#{Reset} | Add new availability block"
+  puts "#{Cyan}avail:remove#{Reset} | Remove availability block"
   puts "#{Cyan}schedule:view#{Reset} | View schedule"
   puts "--------------------------------"
 end
@@ -264,6 +287,7 @@ commands = {
   'appt:add' => Proc.new{appointmentAdd},
   'appt:remove' => Proc.new{appointmentRemove},
   'avail:add' => Proc.new{availabilityAdd},
+  'avail:remove' => Proc.new{availabilityRemove},
   'avail:view' => Proc.new{scheduleView('avail')},
   'schedule:view' => Proc.new{scheduleView('appt')},
   'commands' => Proc.new{list_commands}
