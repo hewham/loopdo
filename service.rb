@@ -9,6 +9,10 @@ class Service
   end
 
   def printDetails
-    puts "#{Cyan}#{@name}#{Reset}, #{Green}$#{@price}#{Reset}, #{Yellow}#{@length} Minutes#{Reset}"
+    puts getDetails
+  end
+
+  def getDetails
+    "#{Cyan}#{@name}#{Reset}, #{Green}$#{@price}#{Reset}, #{Yellow}#{@length} Minutes#{Reset}"
   end
 end
