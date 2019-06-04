@@ -1,10 +1,3 @@
-  # name
-  # phoneNum
-  # services = []
-  # availability = hash{day:[TimeBlocks]}
-  # availability = [TimeBlocks]
-  # appointments = []
-
 class ServiceProvider
   attr_reader :name, :phoneNum, :services, :availability, :appointments, :serviceAdd
   def initialize(name, phoneNum, services, availability, appointments) (
@@ -34,11 +27,8 @@ class ServiceProvider
 
   def scheduleView()
     puts "#{Magenta}#{@name}#{Reset}'s Appointments:"
-    i = 1;
     @appointments.each do |a|
-      puts "#{BgCyan}APPOINTMENT #{i}#{Reset}"
       a.printDetails
-      i += 1
     end
   end
 
