@@ -123,20 +123,25 @@ def appointmentAdd
     serv_names << serv.name
   end
   service_name = $prompt.select("#{BgMagenta}Service Name:#{Reset}", serv_names, cycle: true)
-  month = $prompt.ask('Date (MM):')
-  day = $prompt.ask('Date (DD):')
-  year = $prompt.ask('Date (YYYY):')
-  start_time = $prompt.ask('Start Time (ex: 13:30):')
-  temp = start_time.split(':')
-  hour = temp[0].to_i
-  minute = temp[1].to_i
-  puts 'Will This Appointment Reoccur Weekly?'
-  isWeekly = y_or_n()
-  service = sp.containsService(service_name)
+  # check here for usability
+  is_available = false
+  while !is_available
+    month = $prompt.ask('Date (MM):')
+    day = $prompt.ask('Date (DD):')
+    year = $prompt.ask('Date (YYYY):')
+    start_time = $prompt.ask('Start Time (ex: 13:30):')
+    temp = start_time.split(':')
+    hour = temp[0].to_i
+    minute = temp[1].to_i
+    puts 'Will This Appointment Reoccur Weekly?'
+    isWeekly = y_or_n()
+    service = sp.containsService(service_name)
 
-  start_datetime = DateTime.new(year.to_i, month.to_i, day.to_i, hour, minute)
-  sp.add_appointment(service, TimeBlock.new(start_datetime, isWeekly, service.length), client_name)
-  successPrint()
+    start_datetime = DateTime.new(year.to_i, month.to_i, day.to_i, hour, minute)
+    if sp.add_appointment(service, TimeBlock.new(start_datetime, isWeekly, service.length), client_name)
+      is_available = true
+    end
+  end
 end
 
 def appointmentRemove
@@ -154,7 +159,7 @@ def appointmentRemove
     end
   end
   if i == 1
-    puts "No appointments found for client (#{Cyan}#{client_name}#{Reset}) under service provider (#{Magenta}#{provider_name}#{Reset})."
+    puts "No appointments found for client (#{Cyan}#{client_name}#{Reset}) under service provider (#{Magenta}#{sp.name}#{Reset})."
   else
     loop do
       appointment_keys = appointment_hash.keys

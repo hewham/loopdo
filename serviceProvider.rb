@@ -26,20 +26,22 @@ class ServiceProvider
   end
 
   def scheduleView()
+    puts
     puts "#{Magenta}#{@name}#{Reset}'s Appointments:"
     @appointments.each do |a|
       a.printDetails
     end
+    puts
   end
 
   def availabilityView()
+    puts
     puts "#{Magenta}#{@name}#{Reset}'s Availability:"
-    i = 1;
     @availability.each do |a|
-      puts "#{BgCyan}AVAILABILITY #{i}#{Reset}"
+      puts "#{BgCyan}AVAILABILITY#{Reset}"
       a.printDetails
-      i += 1
     end
+    puts
   end
 
   def containsService(name) (
@@ -97,8 +99,27 @@ class ServiceProvider
         no_overlap_with_appointments = false
       end
     end
-    return is_future_date && service_offered && 
-      provider_available && no_overlap_with_appointments
+
+    no_overlap_with_availability = true
+    @availability.each do |av|
+      #check for overlap if appointment or availability is weekly
+
+      if av.isWeekly || isWeekly
+        if av.dayOfWeek == timeblock.dayOfWeek
+          if av.overlaps_time(timeblock)
+            no_overlap_with_availability = false
+          end
+        end
+      end
+      #check for overlap if dates are the same
+
+      if av.overlaps(timeblock)
+        no_overlap_with_availability = false
+      end
+    end
+
+    return is_future_date && service_offered && provider_available && 
+      no_overlap_with_appointments && no_overlap_with_availability
 
   end
 
@@ -107,8 +128,13 @@ class ServiceProvider
     if is_available(service, timeblock, timeblock.isWeekly)
       appointment = Appointment.new(timeblock, service, client, self)
       @appointments << appointment
+      successPrint()
+      return true
+    else
+      puts "#{Red}The service provider you requested is not available at this time."
+      puts "Please choose a different date/time.#{Reset}"
+      return false
     end
-
   end
 
   def add_availability(timeblock)
