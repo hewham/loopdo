@@ -100,26 +100,26 @@ class ServiceProvider
       end
     end
 
-    no_overlap_with_availability = true
-    @availability.each do |av|
-      #check for overlap if appointment or availability is weekly
+    # no_overlap_with_availability = true
+    # @availability.each do |av|
+    #   #check for overlap if appointment or availability is weekly
 
-      if av.isWeekly || isWeekly
-        if av.dayOfWeek == timeblock.dayOfWeek
-          if av.overlaps_time(timeblock)
-            no_overlap_with_availability = false
-          end
-        end
-      end
-      #check for overlap if dates are the same
+    #   if av.isWeekly || isWeekly
+    #     if av.dayOfWeek == timeblock.dayOfWeek
+    #       if av.overlaps_time(timeblock)
+    #         no_overlap_with_availability = false
+    #       end
+    #     end
+    #   end
+    #   #check for overlap if dates are the same
 
-      if av.overlaps(timeblock)
-        no_overlap_with_availability = false
-      end
-    end
+    #   if av.overlaps(timeblock)
+    #     no_overlap_with_availability = false
+    #   end
+    # end
 
     return is_future_date && service_offered && provider_available && 
-      no_overlap_with_appointments && no_overlap_with_availability
+      no_overlap_with_appointments
 
   end
 
