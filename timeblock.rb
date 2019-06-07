@@ -18,6 +18,19 @@ class TimeBlock
     return starts_after && ends_before
   end
 
+  def contains_time(timeblock2)
+    #return true if the timeblock contains timeblock2 (regardless of date)
+
+    startTime1 = Time.parse(@startTime.strftime("%H:%M:%S %z"))
+  	startTime2 = Time.parse(timeblock2.startTime.strftime("%H:%M:%S %z"))
+  	endTime1 = Time.parse(@endTime.strftime("%H:%M:%S %z"))
+    endTime2 = Time.parse(timeblock2.endTime.strftime("%H:%M:%S %z"))
+
+    starts_after = (startTime2 >= startTime1)
+    ends_before = (endTime2 <= endTime1)
+    return starts_after && ends_before
+  end
+
   def overlaps(timeblock2)
     #returns true if timeblocks overlap
 
