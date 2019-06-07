@@ -19,16 +19,7 @@ class TimeBlock
   end
 
   def overlaps(timeblock2)
-  	#returns true if timeblocks overlap
-  	# overlaps_start = (timeblock2.startTime <= @startTime &&
-  	# 	timeblock2.endTime > @startTime)
-  	# overlaps_end = (timeblock2.startTime < @endTime &&
-  	# 	timeblock2.endTime >= @endTime)
-  	# return contains(timeblock2) || overlaps_start || overlaps_end
-    # check1 = (timeblock2.startTime < @endTime &&
-    #     timeblock2.endTime > @startTime)
-    # check2 = (@startTime < timeblock2.endTime &&
-    #     @endTime > timeblock2.startTime)
+    #returns true if timeblocks overlap
 
     check1 = (timeblock2.startTime >= @startTime &&
         timeblock2.startTime <= @endTime)
@@ -38,17 +29,12 @@ class TimeBlock
   end
 
   def overlaps_time(timeblock2)
-  	#returns true if timeblocks overlap (regardless of date)
+    #returns true if timeblocks overlap (regardless of date)
+
   	startTime1 = Time.parse(@startTime.strftime("%H:%M:%S %z"))
   	startTime2 = Time.parse(timeblock2.startTime.strftime("%H:%M:%S %z"))
   	endTime1 = Time.parse(@endTime.strftime("%H:%M:%S %z"))
   	endTime2 = Time.parse(timeblock2.endTime.strftime("%H:%M:%S %z"))
-
-  	# check1 = (startTime2 < endTime1 &&
-    #     endTime2 > startTime1)
-
-    # check2 = (startTime1 < endTime2 &&
-    #     endTime1 > startTime2)
 
     check1 = (startTime2 >= startTime1 &&
         startTime2 <= endTime1)
