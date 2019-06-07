@@ -10,6 +10,7 @@ require_relative './init'
 require_relative './colors'
 require_relative './availability'
 require 'date'
+require 'launchy'
 
 RSpec.describe ServiceProvider do
     describe "#serviceAdd" do
@@ -163,3 +164,5 @@ RSpec.describe ServiceProvider do
         end
     end
 end
+
+Launchy::Browser.run("./coverage/index.html")
