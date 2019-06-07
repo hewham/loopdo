@@ -180,7 +180,7 @@ def availabilityAdd
   year = $prompt.ask('Date (YYYY):')
   start_time = $prompt.ask('Start Time (ex: 13:30):')
   end_time = $prompt.ask('End Time (ex: 14:30):')
-  puts 'Will This Appointment Reoccur Weekly?'
+  puts 'Will This Availability Reoccur Weekly?'
   isWeekly = y_or_n()
 
   start_temp = start_time.split(':')
