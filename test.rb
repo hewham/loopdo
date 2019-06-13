@@ -165,4 +165,13 @@ RSpec.describe ServiceProvider do
     end
 end
 
+RSpec.describe Service do
+	describe "#printDetails" do
+		it "prints details of service" do
+			new_service = Service.new("Tutoring", 100, 120)
+			expect(new_service.printDetails).to eq("Hola Mundo")
+
+		end
+	end
+end
 Launchy::Browser.run("./coverage/index.html")
