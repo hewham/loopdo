@@ -168,10 +168,13 @@ end
 RSpec.describe Service do
 	describe "#printDetails" do
 		it "prints details of service" do
-			new_service = Service.new("Tutoring", 100, 120)
-			expect(new_service.printDetails).to eq(["Tutoring","100","120"])
+			service_providers = initData
+			service = service_providers[0].services[0]
+			new_service = Service.new(service.name, service.price, service.length)
+			expect(new_service.printDetails).to eq([service.name,service.price.to_s,service.length.to_s])
 
 		end
 	end
 end
+
 Launchy::Browser.run("./coverage/index.html")
