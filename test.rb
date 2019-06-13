@@ -235,4 +235,15 @@ RSpec.describe TimeBlock do
 		end
 	end
 end
+
+RSpec.describe ServiceProvider do
+	describe "#printDetails" do
+		it "prints details of Appointment" do
+			datetime1 = DateTime.new(2019, 12, 12, 12)
+			appointment1 = Appointment.new(TimeBlock.new(datetime1, false, 120), Service.new('Helping', 200, 60), 'Larry', ServiceProvider.new('Jim', '1111111111', [Service.new('Helping', 200, 60)], [], []))
+			expect(appointment1.printDetails).to eq("Thursday")
+
+		end
+	end
+end
 Launchy::Browser.run("./coverage/index.html")
