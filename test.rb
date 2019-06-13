@@ -177,4 +177,17 @@ RSpec.describe Service do
 	end
 end
 
+RSpec.describe Availability do
+	describe "#printDetails" do
+		it "prints details of availability" do
+			service_providers = initData
+			service_provider = service_providers[0]
+			datetime1 = DateTime.new(2019, 12, 12, 12)
+			timeblock = TimeBlock.new(datetime1, false, 120)
+			new_availability = Availability.new(timeblock, timeblock, service_provider)
+			expect(new_availability.printDetails).to eq(["12", "12", "2019", "12:00:00", "14:00:00", "false"])
+		end
+	end
+end
+
 Launchy::Browser.run("./coverage/index.html")
