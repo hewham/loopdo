@@ -169,7 +169,7 @@ RSpec.describe Service do
 	describe "#printDetails" do
 		it "prints details of service" do
 			new_service = Service.new("Tutoring", 100, 120)
-			expect(new_service.printDetails).to eq("Hola Mundo")
+			expect(new_service.printDetails).to eq(["Tutoring","100","120"])
 
 		end
 	end
