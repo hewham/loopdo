@@ -10,6 +10,7 @@ class Service
 
   def printDetails
     puts getDetails
+    [name,price.to_s, length.to_s]
   end
 
   def getDetails

@@ -64,6 +64,7 @@ class TimeBlock
 
   def printDetails
     puts self.getDetails
+    [@startTime.month.to_s, @startTime.day.to_s, @startTime.year.to_s, @startTime.strftime("%T").to_s,@endTime.strftime("%T").to_s,@endTime.strftime("%T").to_s]
   end
 
   def getDetails

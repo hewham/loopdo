@@ -165,4 +165,85 @@ RSpec.describe ServiceProvider do
     end
 end
 
+RSpec.describe Service do
+	describe "#printDetails" do
+		it "prints details of service" do
+			service_providers = initData
+			service = service_providers[0].services[0]
+			new_service = Service.new(service.name, service.price, service.length)
+			expect(new_service.printDetails).to eq([service.name,service.price.to_s,service.length.to_s])
+
+		end
+	end
+end
+
+RSpec.describe Availability do
+	describe "#printDetails" do
+		it "prints details of availability" do
+			service_providers = initData
+			service_provider = service_providers[0]
+			datetime1 = DateTime.new(2019, 12, 12, 12)
+			timeblock = TimeBlock.new(datetime1, false, 120)
+			new_availability = Availability.new(timeblock, timeblock, service_provider)
+			expect(new_availability.printDetails).to eq(["12", "12", "2019", "12:00:00", "14:00:00", "false"])
+		end
+	end
+end
+
+RSpec.describe TimeBlock do
+	describe "#contains" do
+		it "checks if a timeblock contains another time block " do
+			datetime1 = DateTime.new(2019, 12, 12, 12)
+			timeblock = TimeBlock.new(datetime1, false, 120)
+			expect(timeblock.contains(timeblock)).to eq(true)	
+		end
+	end
+	describe "#contains_time" do
+		it "check if a timeblock contains another time block regardless of date" do
+			datetime1 = DateTime.new(2019, 12, 12, 12)
+			timeblock = TimeBlock.new(datetime1, false, 120)
+			datetime2 = DateTime.new(2019, 11, 12, 12)
+			timeblock2 = TimeBlock.new(datetime1, false, 120)
+			expect(timeblock.contains_time(timeblock2)).to eq(true)	
+		end
+	end
+	describe "#overlaps" do
+		it "checks if two timeblocks overlap" do
+			datetime1 = DateTime.new(2019, 12, 12, 12)
+			timeblock = TimeBlock.new(datetime1, false, 120)
+			expect(timeblock.overlaps(timeblock)).to eq(true)	
+		end
+	end
+	describe "#overlaps_time" do
+		it "checks if two timeblocks overlap, no matter the date" do
+			datetime1 = DateTime.new(2019, 12, 12, 12)
+			timeblock = TimeBlock.new(datetime1, false, 120)
+			datetime2 = DateTime.new(2019, 11, 12, 12)
+			timeblock2 = TimeBlock.new(datetime1, false, 120)
+			expect(timeblock.overlaps_time(timeblock2)).to eq(true)	
+		end
+	end
+	describe "#printDetails" do
+		it "prints details of timeblock" do
+			datetime1 = DateTime.new(2019, 12, 12, 12)
+			timeblock = TimeBlock.new(datetime1, false, 120)
+			expect(timeblock.printDetails).to eq(["12", "12", "2019", "12:00:00", "14:00:00", "14:00:00"])
+		end
+	end
+	describe "" do
+		it "" do
+		end
+	end
+end
+
+RSpec.describe ServiceProvider do
+	describe "#printDetails" do
+		it "prints details of Appointment" do
+			datetime1 = DateTime.new(2019, 12, 12, 12)
+			appointment1 = Appointment.new(TimeBlock.new(datetime1, false, 120), Service.new('Helping', 200, 60), 'Larry', ServiceProvider.new('Jim', '1111111111', [Service.new('Helping', 200, 60)], [], []))
+			expect(appointment1.printDetails).to eq("Thursday")
+
+		end
+	end
+end
 Launchy::Browser.run("./coverage/index.html")

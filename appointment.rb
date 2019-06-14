@@ -10,6 +10,7 @@ class Appointment
 
   def printDetails()
     puts getDetails
+    @timeblock.dayOfWeek
   end
 
   def getDetails()
