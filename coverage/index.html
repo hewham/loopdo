@@ -14,7 +14,7 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2019-06-13T20:14:39-04:00">2019-06-13T20:14:39-04:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2019-06-13T21:56:36-04:00">2019-06-13T21:56:36-04:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -169,13 +169,13 @@
         <li class="covered" data-hits="1" data-linenumber="2">
           <span class="hits">1</span>
           
-          <code class="ruby">  attr_reader :timeblock, :service, :client_name, :serviceProvider</code>
+          <code class="ruby">  attr_reader :timeblock, :service, :client_name, :service_provider</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="3">
           <span class="hits">1</span>
           
-          <code class="ruby">  def initialize(timeblock, service, client_name, serviceProvider) (</code>
+          <code class="ruby">  def initialize(timeblock, service, client_name, service_provider) (</code>
         </li>
       
         <li class="covered" data-hits="12" data-linenumber="4">
@@ -199,7 +199,7 @@
         <li class="covered" data-hits="12" data-linenumber="7">
           <span class="hits">12</span>
           
-          <code class="ruby">    @serviceProvider = serviceProvider</code>
+          <code class="ruby">    @service_provider = service_provider</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="8">
@@ -223,19 +223,19 @@
         <li class="covered" data-hits="1" data-linenumber="11">
           <span class="hits">1</span>
           
-          <code class="ruby">  def printDetails()</code>
+          <code class="ruby">  def print_details()</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="12">
           <span class="hits">1</span>
           
-          <code class="ruby">    puts getDetails</code>
+          <code class="ruby">    puts get_details</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="13">
           <span class="hits">1</span>
           
-          <code class="ruby">    @timeblock.dayOfWeek</code>
+          <code class="ruby">    @timeblock.day_of_week</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="14">
@@ -253,25 +253,25 @@
         <li class="covered" data-hits="1" data-linenumber="16">
           <span class="hits">1</span>
           
-          <code class="ruby">  def getDetails()</code>
+          <code class="ruby">  def get_details()</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="17">
           <span class="hits">1</span>
           
-          <code class="ruby">    dayText = nil</code>
+          <code class="ruby">    day_text = nil</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="18">
           <span class="hits">1</span>
           
-          <code class="ruby">    if @timeblock.isWeekly</code>
+          <code class="ruby">    if @timeblock.is_weekly</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="19">
           
           
-          <code class="ruby">      dayText = &quot; - on #{@timeblock.dayOfWeek}&#39;s&quot;</code>
+          <code class="ruby">      day_text = &quot; - on #{@timeblock.day_of_week}&#39;s&quot;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="20">
@@ -283,7 +283,7 @@
         <li class="covered" data-hits="1" data-linenumber="21">
           <span class="hits">1</span>
           
-          <code class="ruby">    return &quot;#{BgCyan}APPOINTMENT: #{Reset} Provider: #{Magenta}#{@serviceProvider.name}#{Reset}, Client: #{Cyan}#{@client_name}#{Reset}, Service: #{Yellow}#{@service.name}#{Reset} \n Date: #{Green}#{@timeblock.month}/#{@timeblock.day}/#{@timeblock.year}#{Reset} | Start: #{Green}#{@timeblock.startTime.strftime(&quot;%T&quot;)}#{Reset} | Stop: #{Green}#{@timeblock.endTime.strftime(&quot;%T&quot;)}#{Reset} | Weekly #{Green}#{@timeblock.isWeekly}#{dayText}#{Reset} \n ----------------------------------------------------------------------&quot;</code>
+          <code class="ruby">    return &quot;#{BgCyan}APPOINTMENT: #{Reset} Provider: #{Magenta}#{@service_provider.name}#{Reset}, Client: #{Cyan}#{@client_name}#{Reset}, Service: #{Yellow}#{@service.name}#{Reset} \n Date: #{Green}#{@timeblock.month}/#{@timeblock.day}/#{@timeblock.year}#{Reset} | Start: #{Green}#{@timeblock.start_time.strftime(&quot;%T&quot;)}#{Reset} | Stop: #{Green}#{@timeblock.end_time.strftime(&quot;%T&quot;)}#{Reset} | Weekly #{Green}#{@timeblock.is_weekly}#{day_text}#{Reset} \n ----------------------------------------------------------------------&quot;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="22">
@@ -338,13 +338,13 @@
         <li class="covered" data-hits="1" data-linenumber="3">
           <span class="hits">1</span>
           
-          <code class="ruby">  attr_reader :start_timeblock, :end_timeblock, :serviceProvider</code>
+          <code class="ruby">  attr_reader :start_timeblock, :end_timeblock, :service_provider</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="4">
           <span class="hits">1</span>
           
-          <code class="ruby">  def initialize(start_timeblock, end_timeblock, serviceProvider) (</code>
+          <code class="ruby">  def initialize(start_timeblock, end_timeblock, service_provider) (</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="5">
@@ -362,7 +362,7 @@
         <li class="covered" data-hits="1" data-linenumber="7">
           <span class="hits">1</span>
           
-          <code class="ruby">    @serviceProvider = serviceProvider</code>
+          <code class="ruby">    @service_provider = service_provider</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="8">
@@ -386,19 +386,19 @@
         <li class="covered" data-hits="1" data-linenumber="11">
           <span class="hits">1</span>
           
-          <code class="ruby">  def printDetails</code>
+          <code class="ruby">  def print_details</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="12">
           <span class="hits">1</span>
           
-          <code class="ruby">    puts &quot;Date: #{Green}#{@start_timeblock.month}/#{@start_timeblock.day}/#{@start_timeblock.year}#{Reset} | Start: #{Green}#{@start_timeblock.startTime.strftime(&quot;%T&quot;)}#{Reset} | Stop: #{Green}#{@start_timeblock.endTime.strftime(&quot;%T&quot;)}#{Reset} | Weekly #{Green}#{@start_timeblock.isWeekly}#{Reset}&quot;</code>
+          <code class="ruby">    puts &quot;Date: #{Green}#{@start_timeblock.month}/#{@start_timeblock.day}/#{@start_timeblock.year}#{Reset} | Start: #{Green}#{@start_timeblock.start_time.strftime(&quot;%T&quot;)}#{Reset} | Stop: #{Green}#{@start_timeblock.end_time.strftime(&quot;%T&quot;)}#{Reset} | Weekly #{Green}#{@start_timeblock.is_weekly}#{Reset}&quot;</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="13">
           <span class="hits">1</span>
           
-          <code class="ruby">    [start_timeblock.month.to_s, start_timeblock.day.to_s, start_timeblock.year.to_s, start_timeblock.startTime.strftime(&quot;%T&quot;).to_s, start_timeblock.endTime.strftime(&quot;%T&quot;).to_s, start_timeblock.isWeekly.to_s]</code>
+          <code class="ruby">    [start_timeblock.month.to_s, start_timeblock.day.to_s, start_timeblock.year.to_s, start_timeblock.start_time.strftime(&quot;%T&quot;).to_s, start_timeblock.end_time.strftime(&quot;%T&quot;).to_s, start_timeblock.is_weekly.to_s]</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="14">
@@ -833,7 +833,7 @@
         <li class="covered" data-hits="1" data-linenumber="7">
           <span class="hits">1</span>
           
-          <code class="ruby">def serviceErrorMessage</code>
+          <code class="ruby">def service_error_message</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="8">
@@ -857,7 +857,7 @@
         <li class="missed" data-hits="0" data-linenumber="11">
           
           
-          <code class="ruby">  spPrint($all_sp)</code>
+          <code class="ruby">  service_provider_print($all_sp)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="12">
@@ -875,7 +875,7 @@
         <li class="covered" data-hits="1" data-linenumber="14">
           <span class="hits">1</span>
           
-          <code class="ruby">def spPrint(all_sp)</code>
+          <code class="ruby">def service_provider_print(all_sp)</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="15">
@@ -935,7 +935,7 @@
         <li class="covered" data-hits="1" data-linenumber="24">
           <span class="hits">1</span>
           
-          <code class="ruby">def servicePrint(all_sp)</code>
+          <code class="ruby">def service_print(all_sp)</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="25">
@@ -959,7 +959,7 @@
         <li class="missed" data-hits="0" data-linenumber="28">
           
           
-          <code class="ruby">    sp.printServices()</code>
+          <code class="ruby">    sp.print_services()</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="29">
@@ -1020,7 +1020,7 @@
         <li class="covered" data-hits="1" data-linenumber="3">
           <span class="hits">1</span>
           
-          <code class="ruby">  attr_reader :name, :price, :length, :printDetails</code>
+          <code class="ruby">  attr_reader :name, :price, :length, :print_details</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="4">
@@ -1068,13 +1068,13 @@
         <li class="covered" data-hits="1" data-linenumber="11">
           <span class="hits">1</span>
           
-          <code class="ruby">  def printDetails</code>
+          <code class="ruby">  def print_details</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="12">
           <span class="hits">1</span>
           
-          <code class="ruby">    puts getDetails</code>
+          <code class="ruby">    puts get_details</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="13">
@@ -1098,7 +1098,7 @@
         <li class="covered" data-hits="1" data-linenumber="16">
           <span class="hits">1</span>
           
-          <code class="ruby">  def getDetails</code>
+          <code class="ruby">  def get_details</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="17">
@@ -1147,13 +1147,13 @@
         <li class="covered" data-hits="1" data-linenumber="2">
           <span class="hits">1</span>
           
-          <code class="ruby">  attr_reader :name, :phoneNum, :services, :availability, :appointments, :serviceAdd</code>
+          <code class="ruby">  attr_reader :name, :phone_number, :services, :availability, :appointments, :service_add</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="3">
           <span class="hits">1</span>
           
-          <code class="ruby">  def initialize(name, phoneNum, services, availability, appointments) (</code>
+          <code class="ruby">  def initialize(name, phone_number, services, availability, appointments) (</code>
         </li>
       
         <li class="covered" data-hits="15" data-linenumber="4">
@@ -1165,7 +1165,7 @@
         <li class="covered" data-hits="15" data-linenumber="5">
           <span class="hits">15</span>
           
-          <code class="ruby">    @phoneNum = phoneNum</code>
+          <code class="ruby">    @phone_number = phone_number</code>
         </li>
       
         <li class="covered" data-hits="15" data-linenumber="6">
@@ -1207,7 +1207,7 @@
         <li class="covered" data-hits="1" data-linenumber="12">
           <span class="hits">1</span>
           
-          <code class="ruby">  def serviceRemove(service_name) (</code>
+          <code class="ruby">  def service_remove(service_name) (</code>
         </li>
       
         <li class="covered" data-hits="2" data-linenumber="13">
@@ -1261,7 +1261,7 @@
         <li class="covered" data-hits="1" data-linenumber="21">
           <span class="hits">1</span>
           
-          <code class="ruby">  def printServices()</code>
+          <code class="ruby">  def print_services()</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="22">
@@ -1279,7 +1279,7 @@
         <li class="missed" data-hits="0" data-linenumber="24">
           
           
-          <code class="ruby">      s.printDetails</code>
+          <code class="ruby">      s.print_details</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="25">
@@ -1303,7 +1303,7 @@
         <li class="covered" data-hits="1" data-linenumber="28">
           <span class="hits">1</span>
           
-          <code class="ruby">  def scheduleView()</code>
+          <code class="ruby">  def schedule_view()</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="29">
@@ -1327,7 +1327,7 @@
         <li class="missed" data-hits="0" data-linenumber="32">
           
           
-          <code class="ruby">      a.printDetails</code>
+          <code class="ruby">      a.print_details</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="33">
@@ -1357,7 +1357,7 @@
         <li class="covered" data-hits="1" data-linenumber="37">
           <span class="hits">1</span>
           
-          <code class="ruby">  def availabilityView()</code>
+          <code class="ruby">  def availability_view()</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="38">
@@ -1387,7 +1387,7 @@
         <li class="missed" data-hits="0" data-linenumber="42">
           
           
-          <code class="ruby">      a.printDetails</code>
+          <code class="ruby">      a.print_details</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="43">
@@ -1417,7 +1417,7 @@
         <li class="covered" data-hits="1" data-linenumber="47">
           <span class="hits">1</span>
           
-          <code class="ruby">  def containsService(name) (</code>
+          <code class="ruby">  def contains_service(name) (</code>
         </li>
       
         <li class="covered" data-hits="10" data-linenumber="48">
@@ -1477,7 +1477,7 @@
         <li class="covered" data-hits="1" data-linenumber="57">
           <span class="hits">1</span>
           
-          <code class="ruby">  def serviceAdd(service) (</code>
+          <code class="ruby">  def service_add(service) (</code>
         </li>
       
         <li class="covered" data-hits="13" data-linenumber="58">
@@ -1519,7 +1519,7 @@
         <li class="covered" data-hits="8" data-linenumber="64">
           <span class="hits">8</span>
           
-          <code class="ruby">    is_future_date = (timeblock.startTime &gt;= DateTime.now)</code>
+          <code class="ruby">    is_future_date = (timeblock.start_time &gt;= DateTime.now)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="65">
@@ -1537,7 +1537,7 @@
         <li class="covered" data-hits="8" data-linenumber="67">
           <span class="hits">8</span>
           
-          <code class="ruby">    service_offered = containsService(service.name)</code>
+          <code class="ruby">    service_offered = contains_service(service.name)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="68">
@@ -1669,13 +1669,13 @@
         <li class="covered" data-hits="4" data-linenumber="89">
           <span class="hits">4</span>
           
-          <code class="ruby">      if appointment.timeblock.isWeekly || isWeekly</code>
+          <code class="ruby">      if appointment.timeblock.is_weekly || isWeekly</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="90">
           
           
-          <code class="ruby">        if appointment.timeblock.dayOfWeek == timeblock.dayOfWeek</code>
+          <code class="ruby">        if appointment.timeblock.day_of_week == timeblock.day_of_week</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="91">
@@ -1777,13 +1777,13 @@
         <li class="missed" data-hits="0" data-linenumber="107">
           
           
-          <code class="ruby">      if av.isWeekly || isWeekly</code>
+          <code class="ruby">      if av.is_weekly || isWeekly</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="108">
           
           
-          <code class="ruby">        if av.dayOfWeek == timeblock.dayOfWeek</code>
+          <code class="ruby">        if av.day_of_week == timeblock.day_of_week</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="109">
@@ -1915,7 +1915,7 @@
         <li class="covered" data-hits="6" data-linenumber="130">
           <span class="hits">6</span>
           
-          <code class="ruby">    if is_available(service, timeblock, timeblock.isWeekly)</code>
+          <code class="ruby">    if is_available(service, timeblock, timeblock.is_weekly)</code>
         </li>
       
         <li class="covered" data-hits="5" data-linenumber="131">
@@ -2054,55 +2054,55 @@
         <li class="covered" data-hits="1" data-linenumber="2">
           <span class="hits">1</span>
           
-          <code class="ruby">  attr_reader :month, :day, :year, :startTime, :endTime, :dayOfWeek, :isWeekly</code>
+          <code class="ruby">  attr_reader :month, :day, :year, :start_time, :end_time, :day_of_week, :is_weekly</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="3">
           <span class="hits">1</span>
           
-          <code class="ruby">  def initialize(startTime, isWeekly, length) (</code>
+          <code class="ruby">  def initialize(start_time, is_weekly, length) (</code>
         </li>
       
         <li class="covered" data-hits="22" data-linenumber="4">
           <span class="hits">22</span>
           
-          <code class="ruby">    @month = startTime.strftime(&quot;%m&quot;)</code>
+          <code class="ruby">    @month = start_time.strftime(&quot;%m&quot;)</code>
         </li>
       
         <li class="covered" data-hits="22" data-linenumber="5">
           <span class="hits">22</span>
           
-          <code class="ruby">    @day = startTime.strftime(&quot;%d&quot;)</code>
+          <code class="ruby">    @day = start_time.strftime(&quot;%d&quot;)</code>
         </li>
       
         <li class="covered" data-hits="22" data-linenumber="6">
           <span class="hits">22</span>
           
-          <code class="ruby">    @year = startTime.strftime(&quot;%Y&quot;)</code>
+          <code class="ruby">    @year = start_time.strftime(&quot;%Y&quot;)</code>
         </li>
       
         <li class="covered" data-hits="22" data-linenumber="7">
           <span class="hits">22</span>
           
-          <code class="ruby">    @startTime = startTime</code>
+          <code class="ruby">    @start_time = start_time</code>
         </li>
       
         <li class="covered" data-hits="22" data-linenumber="8">
           <span class="hits">22</span>
           
-          <code class="ruby">    @isWeekly = isWeekly</code>
+          <code class="ruby">    @is_weekly = is_weekly</code>
         </li>
       
         <li class="covered" data-hits="22" data-linenumber="9">
           <span class="hits">22</span>
           
-          <code class="ruby">    @endTime = startTime + ((length.to_f)/24)/60</code>
+          <code class="ruby">    @end_time = start_time + ((length.to_f)/24)/60</code>
         </li>
       
         <li class="covered" data-hits="22" data-linenumber="10">
           <span class="hits">22</span>
           
-          <code class="ruby">    @dayOfWeek = startTime.strftime(&quot;%A&quot;)</code>
+          <code class="ruby">    @day_of_week = start_time.strftime(&quot;%A&quot;)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="11">
@@ -2126,7 +2126,7 @@
         <li class="covered" data-hits="1" data-linenumber="14">
           <span class="hits">1</span>
           
-          <code class="ruby">  def contains(timeblock2)</code>
+          <code class="ruby">  def contains(new_timeblock)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="15">
@@ -2138,13 +2138,13 @@
         <li class="covered" data-hits="1" data-linenumber="16">
           <span class="hits">1</span>
           
-          <code class="ruby">    starts_after = (timeblock2.startTime &gt;= @startTime)</code>
+          <code class="ruby">    starts_after = (new_timeblock.start_time &gt;= @start_time)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="17">
           <span class="hits">1</span>
           
-          <code class="ruby">    ends_before = (timeblock2.endTime &lt;= @endTime)</code>
+          <code class="ruby">    ends_before = (new_timeblock.end_time &lt;= @end_time)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="18">
@@ -2168,7 +2168,7 @@
         <li class="covered" data-hits="1" data-linenumber="21">
           <span class="hits">1</span>
           
-          <code class="ruby">  def contains_time(timeblock2)</code>
+          <code class="ruby">  def contains_time(new_timeblock)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="22">
@@ -2186,25 +2186,25 @@
         <li class="covered" data-hits="1" data-linenumber="24">
           <span class="hits">1</span>
           
-          <code class="ruby">    startTime1 = Time.parse(@startTime.strftime(&quot;%H:%M:%S %z&quot;))</code>
+          <code class="ruby">    start_time_1 = Time.parse(@start_time.strftime(&quot;%H:%M:%S %z&quot;))</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="25">
           <span class="hits">1</span>
           
-          <code class="ruby">  	startTime2 = Time.parse(timeblock2.startTime.strftime(&quot;%H:%M:%S %z&quot;))</code>
+          <code class="ruby">  	start_time_2 = Time.parse(new_timeblock.start_time.strftime(&quot;%H:%M:%S %z&quot;))</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="26">
           <span class="hits">1</span>
           
-          <code class="ruby">  	endTime1 = Time.parse(@endTime.strftime(&quot;%H:%M:%S %z&quot;))</code>
+          <code class="ruby">  	end_time_1 = Time.parse(@end_time.strftime(&quot;%H:%M:%S %z&quot;))</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="27">
           <span class="hits">1</span>
           
-          <code class="ruby">    endTime2 = Time.parse(timeblock2.endTime.strftime(&quot;%H:%M:%S %z&quot;))</code>
+          <code class="ruby">    end_time_2 = Time.parse(new_timeblock.end_time.strftime(&quot;%H:%M:%S %z&quot;))</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="28">
@@ -2216,13 +2216,13 @@
         <li class="covered" data-hits="1" data-linenumber="29">
           <span class="hits">1</span>
           
-          <code class="ruby">    starts_after = (startTime2 &gt;= startTime1)</code>
+          <code class="ruby">    starts_after = (start_time_2 &gt;= start_time_1)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="30">
           <span class="hits">1</span>
           
-          <code class="ruby">    ends_before = (endTime2 &lt;= endTime1)</code>
+          <code class="ruby">    ends_before = (end_time_2 &lt;= end_time_1)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="31">
@@ -2246,7 +2246,7 @@
         <li class="covered" data-hits="1" data-linenumber="34">
           <span class="hits">1</span>
           
-          <code class="ruby">  def overlaps(timeblock2)</code>
+          <code class="ruby">  def overlaps(new_timeblock)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="35">
@@ -2264,25 +2264,25 @@
         <li class="covered" data-hits="5" data-linenumber="37">
           <span class="hits">5</span>
           
-          <code class="ruby">    check1 = (timeblock2.startTime &gt;= @startTime &amp;&amp;</code>
+          <code class="ruby">    check1 = (new_timeblock.start_time &gt;= @start_time &amp;&amp;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="38">
           
           
-          <code class="ruby">        timeblock2.startTime &lt;= @endTime)</code>
+          <code class="ruby">        new_timeblock.start_time &lt;= @end_time)</code>
         </li>
       
         <li class="covered" data-hits="5" data-linenumber="39">
           <span class="hits">5</span>
           
-          <code class="ruby">    check2 = (@startTime &gt;= timeblock2.startTime &amp;&amp;</code>
+          <code class="ruby">    check2 = (@start_time &gt;= new_timeblock.start_time &amp;&amp;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="40">
           
           
-          <code class="ruby">        @startTime &lt;= timeblock2.endTime)</code>
+          <code class="ruby">        @start_time &lt;= new_timeblock.end_time)</code>
         </li>
       
         <li class="covered" data-hits="5" data-linenumber="41">
@@ -2306,7 +2306,7 @@
         <li class="covered" data-hits="1" data-linenumber="44">
           <span class="hits">1</span>
           
-          <code class="ruby">  def overlaps_time(timeblock2)</code>
+          <code class="ruby">  def overlaps_time(new_timeblock)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="45">
@@ -2324,25 +2324,25 @@
         <li class="covered" data-hits="1" data-linenumber="47">
           <span class="hits">1</span>
           
-          <code class="ruby">  	startTime1 = Time.parse(@startTime.strftime(&quot;%H:%M:%S %z&quot;))</code>
+          <code class="ruby">  	start_time_1 = Time.parse(@start_time.strftime(&quot;%H:%M:%S %z&quot;))</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="48">
           <span class="hits">1</span>
           
-          <code class="ruby">  	startTime2 = Time.parse(timeblock2.startTime.strftime(&quot;%H:%M:%S %z&quot;))</code>
+          <code class="ruby">  	start_time_1 = Time.parse(new_timeblock.start_time.strftime(&quot;%H:%M:%S %z&quot;))</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="49">
           <span class="hits">1</span>
           
-          <code class="ruby">  	endTime1 = Time.parse(@endTime.strftime(&quot;%H:%M:%S %z&quot;))</code>
+          <code class="ruby">  	end_time_1 = Time.parse(@end_time.strftime(&quot;%H:%M:%S %z&quot;))</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="50">
           <span class="hits">1</span>
           
-          <code class="ruby">  	endTime2 = Time.parse(timeblock2.endTime.strftime(&quot;%H:%M:%S %z&quot;))</code>
+          <code class="ruby">  	end_time_2 = Time.parse(new_timeblock.end_time.strftime(&quot;%H:%M:%S %z&quot;))</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="51">
@@ -2354,13 +2354,13 @@
         <li class="covered" data-hits="1" data-linenumber="52">
           <span class="hits">1</span>
           
-          <code class="ruby">    check1 = (startTime2 &gt;= startTime1 &amp;&amp;</code>
+          <code class="ruby">    check1 = (start_time_1 &gt;= start_time_1 &amp;&amp;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="53">
           
           
-          <code class="ruby">        startTime2 &lt;= endTime1)</code>
+          <code class="ruby">        start_time_1 &lt;= end_time_1)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="54">
@@ -2372,13 +2372,13 @@
         <li class="covered" data-hits="1" data-linenumber="55">
           <span class="hits">1</span>
           
-          <code class="ruby">    check2 = (startTime1 &gt;= startTime2 &amp;&amp;</code>
+          <code class="ruby">    check2 = (start_time_1 &gt;= start_time_1 &amp;&amp;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="56">
           
           
-          <code class="ruby">        startTime1 &lt;= endTime2)</code>
+          <code class="ruby">        start_time_1 &lt;= end_time_2)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="57">
@@ -2408,13 +2408,13 @@
         <li class="covered" data-hits="1" data-linenumber="61">
           <span class="hits">1</span>
           
-          <code class="ruby">  def calculate_endtime(startTime, length)</code>
+          <code class="ruby">  def calculate_endtime(start_time, length)</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="62">
           
           
-          <code class="ruby">    return startTime + ((length.to_f)/24)/60</code>
+          <code class="ruby">    return start_time + ((length.to_f)/24)/60</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="63">
@@ -2432,19 +2432,19 @@
         <li class="covered" data-hits="1" data-linenumber="65">
           <span class="hits">1</span>
           
-          <code class="ruby">  def printDetails</code>
+          <code class="ruby">  def print_details</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="66">
           <span class="hits">1</span>
           
-          <code class="ruby">    puts self.getDetails</code>
+          <code class="ruby">    puts self.get_details</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="67">
           <span class="hits">1</span>
           
-          <code class="ruby">    [@startTime.month.to_s, @startTime.day.to_s, @startTime.year.to_s, @startTime.strftime(&quot;%T&quot;).to_s,@endTime.strftime(&quot;%T&quot;).to_s,@endTime.strftime(&quot;%T&quot;).to_s]</code>
+          <code class="ruby">    [@start_time.month.to_s, @start_time.day.to_s, @start_time.year.to_s, @start_time.strftime(&quot;%T&quot;).to_s, @end_time.strftime(&quot;%T&quot;).to_s, @end_time.strftime(&quot;%T&quot;).to_s]</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="68">
@@ -2462,13 +2462,13 @@
         <li class="covered" data-hits="1" data-linenumber="70">
           <span class="hits">1</span>
           
-          <code class="ruby">  def getDetails</code>
+          <code class="ruby">  def get_details</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="71">
           <span class="hits">1</span>
           
-          <code class="ruby">    &quot;Date: #{Green}#{@startTime.month}/#{@startTime.day}/#{@startTime.year}#{Reset} | Start: #{Green}#{@startTime.strftime(&quot;%T&quot;)}#{Reset} | Stop: #{Green}#{@endTime.strftime(&quot;%T&quot;)}#{Reset} | Weekly #{Green}#{@isWeekly}#{Reset}&quot;</code>
+          <code class="ruby">    &quot;Date: #{Green}#{@start_time.month}/#{@start_time.day}/#{@start_time.year}#{Reset} | Start: #{Green}#{@start_time.strftime(&quot;%T&quot;)}#{Reset} | Stop: #{Green}#{@end_time.strftime(&quot;%T&quot;)}#{Reset} | Weekly #{Green}#{@is_weekly}#{Reset}&quot;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="72">

@@ -1,15 +1,15 @@
 class ServiceProvider
-  attr_reader :name, :phoneNum, :services, :availability, :appointments, :serviceAdd
-  def initialize(name, phoneNum, services, availability, appointments) (
+  attr_reader :name, :phone_number, :services, :availability, :appointments, :service_add
+  def initialize(name, phone_number, services, availability, appointments) (
     @name = name
-    @phoneNum = phoneNum
+    @phone_number = phone_number
     @services = services
     @availability = availability
     @appointments = appointments
   )
   end
 
-  def serviceRemove(service_name) (
+  def service_remove(service_name) (
     for service in @services do
       if service.name == service_name
         @services.delete(service)
@@ -18,33 +18,33 @@ class ServiceProvider
     )
   end
 
-  def printServices()
+  def print_services()
     puts "#{Magenta}#{@name}#{Reset}'s Services:"
     @services.each do |s|
-      s.printDetails
+      s.print_details
     end
   end
 
-  def scheduleView()
+  def schedule_view()
     puts
     puts "#{Magenta}#{@name}#{Reset}'s Appointments:"
     @appointments.each do |a|
-      a.printDetails
+      a.print_details
     end
     puts
   end
 
-  def availabilityView()
+  def availability_view()
     puts
     puts "#{Magenta}#{@name}#{Reset}'s Availability:"
     @availability.each do |a|
       puts "#{BgCyan}AVAILABILITY#{Reset}"
-      a.printDetails
+      a.print_details
     end
     puts
   end
 
-  def containsService(name) (
+  def contains_service(name) (
     for service in @services do
       if service.name == name
         return service
@@ -54,17 +54,17 @@ class ServiceProvider
   )
   end
 
-  def serviceAdd(service) (
+  def service_add(service) (
     @services.push(service)
   )
   end
   
   def is_available(service, timeblock, isWeekly)
     #add check to make sure timeblock is in the future
-    is_future_date = (timeblock.startTime >= DateTime.now)
+    is_future_date = (timeblock.start_time >= DateTime.now)
 
     #check if provider offers service
-    service_offered = containsService(service.name)
+    service_offered = contains_service(service.name)
     # puts('past service_offered')
 
     #check provider's availability
@@ -86,8 +86,8 @@ class ServiceProvider
     @appointments.each do |appointment|
       #check for overlap if either appointment is weekly
 
-      if appointment.timeblock.isWeekly || isWeekly
-        if appointment.timeblock.dayOfWeek == timeblock.dayOfWeek
+      if appointment.timeblock.is_weekly || isWeekly
+        if appointment.timeblock.day_of_week == timeblock.day_of_week
           if appointment.timeblock.overlaps_time(timeblock)
             no_overlap_with_appointments = false
           end
@@ -104,8 +104,8 @@ class ServiceProvider
     @availability.each do |av|
       #check if appointment is contained within availability if availability is weekly
 
-      if av.isWeekly || isWeekly
-        if av.dayOfWeek == timeblock.dayOfWeek
+      if av.is_weekly || isWeekly
+        if av.day_of_week == timeblock.day_of_week
           if !av.contains_time(timeblock)
             availability_contains = false
           end
@@ -127,7 +127,7 @@ class ServiceProvider
 
   def add_appointment(service, timeblock, client)
     #add appointment to provider's schedule
-    if is_available(service, timeblock, timeblock.isWeekly)
+    if is_available(service, timeblock, timeblock.is_weekly)
       appointment = Appointment.new(timeblock, service, client, self)
       @appointments << appointment
       success_print()

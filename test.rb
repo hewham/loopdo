@@ -18,7 +18,7 @@ RSpec.describe ServiceProvider do
             it "should add service to sp's services" do
                 sp = ServiceProvider.new("waluigi", 1111111111, [], [], [])
                 serv = Service.new("hugs", 0, 180)
-                sp.serviceAdd(serv)
+                sp.service_add(serv)
                 expect(sp.services.include?(serv)).to eq(true)
             end
         end
@@ -32,9 +32,9 @@ RSpec.describe ServiceProvider do
                 sp = ServiceProvider.new("waluigi", 1111111111, [], [], [])
                 serv1 = Service.new("hugs", 0, 180)
                 serv2 = Service.new("shrugs", 3, 60)
-                sp.serviceAdd(serv1)
-                sp.serviceAdd(serv2)
-                sp.serviceRemove(serv1.name)
+                sp.service_add(serv1)
+                sp.service_add(serv2)
+                sp.service_remove(serv1.name)
                 expect(sp.services.include?(serv1)).to eq(false)
             end
         end
@@ -44,9 +44,9 @@ RSpec.describe ServiceProvider do
                 sp = ServiceProvider.new("waluigi", 1111111111, [], [], [])
                 serv1 = Service.new("hugs", 0, 180)
                 serv2 = Service.new("shrugs", 3, 60)
-                sp.serviceAdd(serv1)
+                sp.service_add(serv1)
                 test_services_length = 1
-                sp.serviceRemove(serv2.name)
+                sp.service_remove(serv2.name)
                 expect(sp.services.length).to eq(test_services_length)
             end
         end
@@ -59,8 +59,8 @@ RSpec.describe ServiceProvider do
             it "returns true" do
                 sp = ServiceProvider.new("waluigi", 1111111111, [], [], [])
                 serv1 = Service.new("hugs", 0, 180)
-                sp.serviceAdd(serv1)
-                expect(sp.containsService(serv1.name)).to eq(serv1)
+                sp.service_add(serv1)
+                expect(sp.contains_service(serv1.name)).to eq(serv1)
             end
         end
 
@@ -69,8 +69,8 @@ RSpec.describe ServiceProvider do
                 sp = ServiceProvider.new("waluigi", 1111111111, [], [], [])
                 serv1 = Service.new("hugs", 0, 180)
                 serv2 = Service.new("shrugs", 3, 60)
-                sp.serviceAdd(serv1)
-                expect(sp.containsService(serv2.name)).to eq(false)
+                sp.service_add(serv1)
+                expect(sp.contains_service(serv2.name)).to eq(false)
             end
         end
     end
@@ -96,8 +96,8 @@ RSpec.describe ServiceProvider do
                 sp = ServiceProvider.new("waluigi", 1111111111, [], [], [])
                 serv1 = Service.new("hugs", 0, 180)
                 serv2 = Service.new("shrugs", 3, 60)
-                sp.serviceAdd(serv1)
-                sp.serviceAdd(serv2)
+                sp.service_add(serv1)
+                sp.service_add(serv2)
                 tb1 = TimeBlock.new(DateTime.new(2019, 12, 12, 12), false, 120)
                 tb2 = TimeBlock.new(DateTime.new(2019, 11, 11, 11), false, 120)
                 sp.add_appointment(serv1, tb1, 'bill')
@@ -110,8 +110,8 @@ RSpec.describe ServiceProvider do
                 sp = ServiceProvider.new("waluigi", 1111111111, [], [], [])
                 serv1 = Service.new("hugs", 0, 180)
                 serv2 = Service.new("shrugs", 3, 60)
-                sp.serviceAdd(serv1)
-                sp.serviceAdd(serv2)
+                sp.service_add(serv1)
+                sp.service_add(serv2)
                 tb1 = TimeBlock.new(DateTime.new(2019, 12, 12, 12), false, 120)
                 sp.add_appointment(serv1, tb1, 'bill')
                 expect(sp.is_available(serv2, tb1, false)).to eq(false)
@@ -142,7 +142,7 @@ RSpec.describe ServiceProvider do
             it "should add appointment to sp's appointments" do
                 sp = ServiceProvider.new("waluigi", 1111111111, [], [], [])
                 serv1 = Service.new("hugs", 0, 180)
-                sp.serviceAdd(serv1)
+                sp.service_add(serv1)
                 tb1 = TimeBlock.new(DateTime.new(2019, 12, 12, 12), false, 120)
                 tb2 = TimeBlock.new(DateTime.new(2019, 11, 11, 11), false, 120)
                 sp.add_appointment(serv1, tb1, 'bill')
@@ -155,8 +155,8 @@ RSpec.describe ServiceProvider do
                 sp = ServiceProvider.new("waluigi", 1111111111, [], [], [])
                 serv1 = Service.new("hugs", 0, 180)
                 serv2 = Service.new("shrugs", 3, 60)
-                sp.serviceAdd(serv1)
-                sp.serviceAdd(serv2)
+                sp.service_add(serv1)
+                sp.service_add(serv2)
                 tb1 = TimeBlock.new(DateTime.new(2019, 12, 12, 12), false, 120)
                 sp.add_appointment(serv1, tb1, 'bill')
                 expect(sp.add_appointment(serv2, tb1, 'bill')).to eq(false)
@@ -171,7 +171,7 @@ RSpec.describe Service do
 			service_providers = initData
 			service = service_providers[0].services[0]
 			new_service = Service.new(service.name, service.price, service.length)
-			expect(new_service.printDetails).to eq([service.name,service.price.to_s,service.length.to_s])
+			expect(new_service.print_details).to eq([service.name, service.price.to_s, service.length.to_s])
 
 		end
 	end
@@ -185,7 +185,7 @@ RSpec.describe Availability do
 			datetime1 = DateTime.new(2019, 12, 12, 12)
 			timeblock = TimeBlock.new(datetime1, false, 120)
 			new_availability = Availability.new(timeblock, timeblock, service_provider)
-			expect(new_availability.printDetails).to eq(["12", "12", "2019", "12:00:00", "14:00:00", "false"])
+			expect(new_availability.print_details).to eq(["12", "12", "2019", "12:00:00", "14:00:00", "false"])
 		end
 	end
 end
@@ -227,7 +227,7 @@ RSpec.describe TimeBlock do
 		it "prints details of timeblock" do
 			datetime1 = DateTime.new(2019, 12, 12, 12)
 			timeblock = TimeBlock.new(datetime1, false, 120)
-			expect(timeblock.printDetails).to eq(["12", "12", "2019", "12:00:00", "14:00:00", "14:00:00"])
+			expect(timeblock.print_details).to eq(["12", "12", "2019", "12:00:00", "14:00:00", "14:00:00"])
 		end
 	end
 	describe "" do
@@ -241,7 +241,7 @@ RSpec.describe ServiceProvider do
 		it "prints details of Appointment" do
 			datetime1 = DateTime.new(2019, 12, 12, 12)
 			appointment1 = Appointment.new(TimeBlock.new(datetime1, false, 120), Service.new('Helping', 200, 60), 'Larry', ServiceProvider.new('Jim', '1111111111', [Service.new('Helping', 200, 60)], [], []))
-			expect(appointment1.printDetails).to eq("Thursday")
+			expect(appointment1.print_details).to eq("Thursday")
 
 		end
 	end

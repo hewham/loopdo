@@ -1,6 +1,6 @@
 
 class Service
-  attr_reader :name, :price, :length, :printDetails
+  attr_reader :name, :price, :length, :print_details
   def initialize(name, price, length) (
     @name = name
     @price = price
@@ -8,12 +8,12 @@ class Service
   )
   end
 
-  def printDetails
-    puts getDetails
+  def print_details
+    puts get_details
     [name,price.to_s, length.to_s]
   end
 
-  def getDetails
+  def get_details
     "#{Cyan}#{@name}#{Reset}, #{Green}$#{@price}#{Reset}, #{Yellow}#{@length} Minutes#{Reset}"
   end
 end

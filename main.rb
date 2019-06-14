@@ -53,18 +53,18 @@ def service_add
       success_print()
       break
     else
-      serviceErrorMessage()
+      service_error_message()
     end
   end
 end
 
 def service_remove
   puts "Choose Service to Remove"
-  servicePrint($all_sp)
+  service_print($all_sp)
   sp = select_sp()
   service_hash = {}
   sp.services.each do |s|
-    key = s.getDetails
+    key = s.get_details
     service_hash[key] = s
   end
   if sp.services.length == 0
@@ -115,7 +115,7 @@ end
 def appointment_add
   client_name = $prompt.ask('Client Name:')
   puts "Hello #{client_name}! Choose Provider & Service to Schedule"
-  servicePrint($all_sp)
+  service_print($all_sp)
   puts 'Provider Name:'
   sp = select_sp()
   serv_names = []
@@ -135,7 +135,7 @@ def appointment_add
     minute = temp[1].to_i
     puts 'Will This Appointment Reoccur Weekly?'
     isWeekly = y_or_n()
-    service = sp.containsService(service_name)
+    service = sp.contains_service(service_name)
 
     start_datetime = DateTime.new(year.to_i, month.to_i, day.to_i, hour, minute)
     if sp.add_appointment(service, TimeBlock.new(start_datetime, isWeekly, service.length), client_name)
@@ -145,7 +145,7 @@ def appointment_add
 end
 
 def appointment_remove
-  spPrint($all_sp)
+  service_provider_print($all_sp)
 
   puts 'Provider Name To Cancel Appt:'
   sp = select_sp()
@@ -154,7 +154,7 @@ def appointment_remove
   i = 1;
   sp.appointments.each do |a|
     if a.client_name == client_name
-      key = a.getDetails
+      key = a.get_details
       appointment_hash[key] = a
       i += 1
     end
@@ -173,7 +173,7 @@ def appointment_remove
 end
 
 def availability_add
-  spPrint($all_sp)
+  service_provider_print($all_sp)
   puts 'Provider Name:'
   sp = select_sp()
   month = $prompt.ask('Date (MM):')
@@ -207,7 +207,7 @@ def availability_remove
   sp = select_sp()
   availability_hash = {}
   sp.availability.each do |av|
-    key = av.getDetails
+    key = av.get_details
     availability_hash[key] = av
   end
   if sp.availability.length == 0
@@ -231,7 +231,7 @@ def schedule_view(type)
       sp.schedule_view()
       break
     elsif type == 'avail'
-      sp.availabilityView()
+      sp.availability_view()
       break
     end
   end
@@ -258,10 +258,10 @@ end
 commands = {
   'Add service' => Proc.new{service_add},
   'Remove service' => Proc.new{service_remove},
-  'View services' => Proc.new{servicePrint($all_sp)},
+  'View services' => Proc.new{service_print($all_sp)},
   'Add service provider' => Proc.new{sp_add},
   'Remove service provider' => Proc.new{sp_remove},
-  'View service providers' => Proc.new{spPrint($all_sp)},
+  'View service providers' => Proc.new{service_provider_print($all_sp)},
   'Add appointments' => Proc.new{appointment_add},
   'Remove appointments' => Proc.new{appointment_remove},
   'Add availability' => Proc.new{availability_add},
