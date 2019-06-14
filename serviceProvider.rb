@@ -130,7 +130,7 @@ class ServiceProvider
     if is_available(service, timeblock, timeblock.isWeekly)
       appointment = Appointment.new(timeblock, service, client, self)
       @appointments << appointment
-      successPrint()
+      success_print()
       return true
     else
       puts "#{Red}The service provider you requested is not available at this time."

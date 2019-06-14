@@ -42,15 +42,15 @@ def select_sp
   get_sp_by_name($prompt.select("#{BgMagenta}Service Provider:#{Reset}", sp_names, cycle: true))
 end
 
-def serviceAdd
+def service_add
   service_name = $prompt.ask('Service Name:')
   service_price = $prompt.ask('Service Price:')
   service_length = $prompt.ask('Service Length (Mins):')
   loop do
     sp = select_sp()
     if sp
-      sp.serviceAdd(Service.new(service_name, service_price, service_length))
-      successPrint()
+      sp.service_add(Service.new(service_name, service_price, service_length))
+      success_print()
       break
     else
       serviceErrorMessage()
@@ -58,7 +58,7 @@ def serviceAdd
   end
 end
 
-def serviceRemove
+def service_remove
   puts "Choose Service to Remove"
   servicePrint($all_sp)
   sp = select_sp()
@@ -74,26 +74,26 @@ def serviceRemove
       service_keys = service_hash.keys
       serv_to_be_deleted = $prompt.select("Choose Service to remove", service_keys, cycle: true)
       sp.services.delete(service_hash[serv_to_be_deleted])
-      successPrint()
+      success_print()
       break
     end
   end
 end
 
-def spAdd
+def sp_add
   provider_name = $prompt.ask('Provider Name:')
   provider_phone = $prompt.ask('Provider Phone Number:')
   $all_sp.push(ServiceProvider.new(provider_name, provider_phone, [], {}, []))
-  successPrint()
+  success_print()
 end
 
-def spRemove
+def sp_remove
   puts 'Provider Name To Remove:'
   sp = select_sp()
   confirm = y_or_n()
   if confirm
     $all_sp.delete(sp)
-    successPrint()
+    success_print()
   else
     puts 'Did Not Delete'
   end
@@ -112,7 +112,7 @@ def y_or_n
   end
 end
 
-def appointmentAdd
+def appointment_add
   client_name = $prompt.ask('Client Name:')
   puts "Hello #{client_name}! Choose Provider & Service to Schedule"
   servicePrint($all_sp)
@@ -144,8 +144,9 @@ def appointmentAdd
   end
 end
 
-def appointmentRemove
+def appointment_remove
   spPrint($all_sp)
+
   puts 'Provider Name To Cancel Appt:'
   sp = select_sp()
   client_name = $prompt.ask('Your Name:')
@@ -165,13 +166,13 @@ def appointmentRemove
       appointment_keys = appointment_hash.keys
       a_to_be_deleted = $prompt.select("Choose Appointment to remove", appointment_keys, cycle: true)
       sp.appointments.delete(appointment_hash[a_to_be_deleted])
-      successPrint()
+      success_print()
       break
     end
   end
 end
 
-def availabilityAdd
+def availability_add
   spPrint($all_sp)
   puts 'Provider Name:'
   sp = select_sp()
@@ -198,10 +199,10 @@ def availabilityAdd
 
   #sp.add_appointment(service, TimeBlock.new(month, day, year, start_datetime, isWeekly, service.length), client_name)
   sp.add_availability(timeblock)
-  successPrint()
+  success_print()
 end
 
-def availabilityRemove
+def availability_remove
   puts 'Provider Name To Remove Availability:'
   sp = select_sp()
   availability_hash = {}
@@ -216,18 +217,18 @@ def availabilityRemove
       availability_keys = availability_hash.keys
       av_to_be_deleted = $prompt.select("Choose Availability to remove", availability_keys, cycle: true)
       sp.availability.delete(availability_hash[av_to_be_deleted])
-      successPrint()
+      success_print()
       break
     end
   end
 end
 
-def scheduleView(type)
+def schedule_view(type)
   loop do
     puts "Choose a Service Provider to see their schedule:"
     sp = select_sp()
     if type == 'appt'
-      sp.scheduleView()
+      sp.schedule_view()
       break
     elsif type == 'avail'
       sp.availabilityView()
@@ -255,18 +256,18 @@ def list_commands
 end
 
 commands = {
-  'Add service' => Proc.new{serviceAdd},
-  'Remove service' => Proc.new{serviceRemove},
+  'Add service' => Proc.new{service_add},
+  'Remove service' => Proc.new{service_remove},
   'View services' => Proc.new{servicePrint($all_sp)},
-  'Add service provider' => Proc.new{spAdd},
-  'Remove service provider' => Proc.new{spRemove},
+  'Add service provider' => Proc.new{sp_add},
+  'Remove service provider' => Proc.new{sp_remove},
   'View service providers' => Proc.new{spPrint($all_sp)},
-  'Add appointments' => Proc.new{appointmentAdd},
-  'Remove appointments' => Proc.new{appointmentRemove},
-  'Add availability' => Proc.new{availabilityAdd},
-  'Remove availability' => Proc.new{availabilityRemove},
-  'View availability' => Proc.new{scheduleView('avail')},
-  'View schedule' => Proc.new{scheduleView('appt')},
+  'Add appointments' => Proc.new{appointment_add},
+  'Remove appointments' => Proc.new{appointment_remove},
+  'Add availability' => Proc.new{availability_add},
+  'Remove availability' => Proc.new{availability_remove},
+  'View availability' => Proc.new{schedule_view('avail')},
+  'View schedule' => Proc.new{schedule_view('appt')},
   'View Commands' => Proc.new{list_commands()},
   'Exit program' => 0
 }

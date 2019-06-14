@@ -1,5 +1,5 @@
 
-def successPrint
+def success_print
   puts 'Success!'
   puts ''
 end
